@@ -3,19 +3,9 @@ import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import {
-  MatDialogModule,
-  MatFormFieldModule,
-  MatNativeDateModule,
-  MatTableModule,
-  MatPaginatorModule,
-  MatInputModule,
-  MatMenuModule,
-  MatTooltipModule,
-  MatSelectModule,
-  MatButtonModule,
-  MatCheckboxModule
-} from "@angular/material";
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
 
 import { Routes, RouterModule } from "@angular/router";
 
@@ -53,15 +43,9 @@ const appRoutes: Routes = [
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
     MatDatepickerModule,
-    MatNativeDateModule,
     MatTableModule,
-    MatPaginatorModule,
     MatInputModule,
-    MatMenuModule,
-    MatTooltipModule,
-    MatSelectModule,
     MatButtonModule,
-    MatCheckboxModule,
     ScrollingModule
   ],
   entryComponents: [   

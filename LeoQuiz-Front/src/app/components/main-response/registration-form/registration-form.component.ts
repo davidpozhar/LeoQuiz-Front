@@ -3,7 +3,7 @@ import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { IUserData } from "../../../interfaces/user-data";
 import { SignInUpService } from "src/app/services/sign-in-up.service";
 import { SignInUpValidator } from "src/app/validators/sign-in-up.validator";
-import { MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
 @Component({

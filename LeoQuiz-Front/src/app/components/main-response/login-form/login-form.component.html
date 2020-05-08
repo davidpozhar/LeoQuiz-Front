@@ -2,7 +2,7 @@
     <form
       class="registration-form"
       (ngSubmit)="onSubmit()"
-      [formGroup]="loginInForm"
+      [formGroup]="loginForm"
     >
       <div class="form-text-div">
         <strong>Login In</strong>
@@ -18,7 +18,7 @@
           placeholder="example@gmail.com"
         />
   
-        <span *ngIf="loginInForm.get('userEmail').hasError('doesNotRegistered')"
+        <span *ngIf="loginForm.get('userEmail').hasError('doesNotRegistered')"
           >Email does not registered!</span
         >
       </div>
@@ -33,8 +33,8 @@
         />
         <span
           *ngIf="
-            loginInForm.get('userPassword').hasError('incorrectPassword') &&
-            loginInForm.get('userPassword').touched
+            loginForm.get('userPassword').hasError('incorrectPassword') &&
+            loginForm.get('userPassword').touched
           "
           >Incorrect password for this account!</span
         >
@@ -45,7 +45,7 @@
           type="submit"
           value="Submit"
           class="submit-button"
-          [disabled]="loginInForm.invalid"
+          [disabled]="loginForm.invalid"
         />
       </div>
   
