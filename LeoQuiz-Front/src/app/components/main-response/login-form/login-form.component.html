@@ -1,0 +1,54 @@
+<main class="container">
+    <form
+      class="registration-form"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="loginForm"
+    >
+      <div class="form-text-div">
+        <strong>Login In</strong>
+      </div>
+  
+      <div class="div-for-field">
+        <label for="userEmail">Email</label>
+        <input
+          formControlName="userEmail"
+          name="userEmail"
+          type="email"
+          class="field"
+          placeholder="example@gmail.com"
+        />
+  
+        <span *ngIf="loginForm.get('userEmail').hasError('doesNotRegistered')"
+          >Email does not registered!</span
+        >
+      </div>
+  
+      <div class="div-for-field">
+        <label for="userPassword">Password</label>
+        <input
+          formControlName="userPassword"
+          name="userPassword"
+          type="password"
+          class="field"
+        />
+        <span
+          *ngIf="
+            loginForm.get('userPassword').hasError('incorrectPassword') &&
+            loginForm.get('userPassword').touched
+          "
+          >Incorrect password for this account!</span
+        >
+      </div>
+  
+      <div class="div-for-field">
+        <input
+          type="submit"
+          value="Submit"
+          class="submit-button"
+          [disabled]="loginForm.invalid"
+        />
+      </div>
+  
+      <a routerLink="/registration">Do not have an account?</a>
+    </form>
+  </main>

@@ -1,0 +1,121 @@
+<main class="container">
+    <form
+      class="registration-form"
+      (ngSubmit)="onSubmit()"
+      [formGroup]="registrationForm"
+    >
+      <div class="form-text-div">
+        <strong>Sign Up</strong>
+      </div>
+  
+      <div class="div-for-field">
+        <label for="userName">Name</label>
+        <input
+          formControlName="userName"
+          name="userName"
+          type="text"
+          class="field"
+          placeholder="Sam"
+        />
+        <span
+          *ngIf="
+            registrationForm.get('userName').hasError('incorrectName') &&
+            registrationForm.get('userName').touched
+          "
+          >Only 1 Latin word! First letter Upper! No number!
+        </span>
+      </div>
+  
+      <div class="div-for-field">
+        <label for="userSurname">Surname</label>
+        <input
+          formControlName="userSurname"
+          name="userSurname"
+          type="text"
+          class="field"
+          placeholder="Smith"
+        />
+        <span
+          *ngIf="
+            registrationForm.get('userSurname').hasError('incorrectSurname') &&
+            registrationForm.get('userSurname').touched
+          "
+          >Only 1 Latin word! First letter Upper! No number!
+        </span>
+      </div>
+  
+      <div class="div-for-field">
+        <label for="userEmail">Email</label>
+        <input
+          formControlName="userEmail"
+          name="userEmail"
+          type="email"
+          class="field"
+          placeholder="example@gmail.com"
+        />
+        <span
+          *ngIf="
+            registrationForm.get('userEmail').hasError('incorrectEmail') &&
+            registrationForm.get('userEmail').touched
+          "
+          >Started with letter! Without special symbols!</span
+        >
+        <span
+          *ngIf="registrationForm.get('userEmail').hasError('alreadyRegistered')"
+          >Email already registered!</span
+        >
+      </div>
+  
+      <div formGroupName="passwords">
+        <div class="div-for-field">
+          <label for="userPassword">Password</label>
+          <input
+            formControlName="userPassword"
+            name="userPassword"
+            type="password"
+            class="field"
+          />
+          <span
+            *ngIf="
+              registrationForm
+                .get('passwords')
+                .get('userPassword')
+                .hasError('doesNotStrongPassword') &&
+              registrationForm.get('passwords').get('userPassword').touched
+            "
+            >At least: 1 upper & lowercase letter, 1 number, 1 special symbol, 8
+            characters!</span
+          >
+        </div>
+  
+        <div class="div-for-field">
+          <label for="userConfirmPassword">Confirm Password</label>
+          <input
+            formControlName="userConfirmPassword"
+            name="userConfirmPassword"
+            type="password"
+            class="field"
+          />
+          <span
+            *ngIf="
+              registrationForm.get('passwords').hasError('passwordsDoNotMatch') &&
+              registrationForm.get('passwords').touched
+            "
+          >
+            Passwords do not match!</span
+          >
+        </div>
+      </div>
+  
+      <div class="div-for-field">
+        <input
+          type="submit"
+          value="Submit"
+          class="submit-button"
+          [disabled]="registrationForm.invalid"
+        />
+      </div>
+  
+      <a routerLink="/login">Already have an account?</a>
+    </form>
+  </main>
