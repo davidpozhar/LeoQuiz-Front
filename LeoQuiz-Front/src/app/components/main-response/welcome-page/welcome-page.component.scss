@@ -1,0 +1,58 @@
+nav{
+    position: fixed;
+    top: 3vh;
+    right: 5vw;
+    font-size: 1.5em;
+    z-index: 100;
+
+    :hover{
+        color: black;
+    }
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    margin: 1vw;
+}
+
+main {
+  margin-top: 4.2vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+    .left-part{
+        width: 50%;
+        display: flex;
+        justify-content: center;
+
+    }
+    .right-part{
+        width: 50%;
+    }
+
+    .heading{
+        text-align: left;
+        font-size: 4em;
+        color: white;
+        letter-spacing: 6px;
+        line-height: 1.4em;
+        font-weight: bold;
+    }
+
+.card{
+    align-self: center;
+    text-align: center;
+    width: 60%
+}
+
+    .text{
+        text-align: left;
+        font-size: 2em;
+        line-height: 1em;
+        letter-spacing: 3px;
+        color: lightsteelblue;
+    }
+}

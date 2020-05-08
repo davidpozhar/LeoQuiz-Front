@@ -1,0 +1,35 @@
+.main-header {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    min-height: fit-content;
+    z-index: 100;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #00be10;
+  
+    .logo {
+      padding: 1.5%;
+      font-family: "Montserrat", sans-serif;
+      color: #f0e9d7;
+      font-size: 3.2vw;
+      cursor: pointer;
+  
+      @media (max-width: 450px) {
+        font-size: 10vw;
+        min-height: fit-content;
+        }
+    }
+  
+    .logo:focus {
+      outline: none;
+    }
+  
+    @media (max-width: 450px) {
+      min-height: fit-content;
+  
+      padding-bottom: 1vw;
+      padding-top: 1vw;
+    }
+  }
