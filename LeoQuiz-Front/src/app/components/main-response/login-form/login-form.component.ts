@@ -1,22 +1,20 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { IUserData } from "../../../interfaces/user-data";
-import { SignInUpService } from "src/app/services/sign-in-up.service";
-import { MatDialog } from "@angular/material/dialog";
+import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
 
 @Component({
   selector: "app-login-form",
   templateUrl: "./login-form.component.html",
-  styleUrls: ["./login-form.component.scss"],
+  styleUrls: ["./login-form.component.scss"]
 })
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
   error: string = null;
 
   constructor(
-    private signInUpService: SignInUpService,
-    public dialog: MatDialog,
+    private signInUpService: AuthService,
     private router: Router
   ) {}
 

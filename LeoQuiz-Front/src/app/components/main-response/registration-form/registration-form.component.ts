@@ -1,9 +1,8 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
 import { IUserData } from "../../../interfaces/user-data";
-import { SignInUpService } from "src/app/services/sign-in-up.service";
+import { AuthService } from "src/app/services/auth.service";
 import { SignInUpValidator } from "src/app/validators/sign-in-up.validator";
-import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 
 @Component({
@@ -20,9 +19,8 @@ export class RegistrationFormComponent implements OnInit {
   ];
 
   constructor(
-    private signInUpService: SignInUpService,
+    private authService: AuthService,
     private singInUpValidator: SignInUpValidator,
-    public dialog: MatDialog,
     private router: Router
   ) {}
 
@@ -66,11 +64,10 @@ export class RegistrationFormComponent implements OnInit {
       userRole: "2"
     };
 
-    this.signInUpService.signUp(inputData).subscribe(
+    this.authService.signUp(inputData).subscribe(
       responseUserData => {
 
 
-        // TODO доробити
 
         this.registrationForm.reset();
 
@@ -78,9 +75,6 @@ export class RegistrationFormComponent implements OnInit {
       },
       errorData => {
         console.log(errorData);
-
-        // TODO сюди треба додати обробку помилки, якщо ще щось сталось, хоча, тут єдиний трабл
-        // це як раз або ВЖЕ ЗАРЕЄСТРОВАНИЙ емейл, або ж трабл з підключенням до сервака ;)
 
         if (errorData === "Email is in use.") {
           this.getRedBorderEmailInput();

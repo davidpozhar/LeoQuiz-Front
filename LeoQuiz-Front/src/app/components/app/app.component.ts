@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { SignInUpService } from 'src/app/services/sign-in-up.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: "app-root",
@@ -11,7 +11,7 @@ export class AppComponent implements OnInit, OnDestroy {
   title = "LeoQuiz";
 
   constructor(
-    private signInUpService: SignInUpService,
+    private signInUpService: AuthService,
     private route: ActivatedRoute
   ) {}
 
