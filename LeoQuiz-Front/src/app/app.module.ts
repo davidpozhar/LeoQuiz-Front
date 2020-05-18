@@ -1,30 +1,30 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { HttpClientModule } from "@angular/common/http";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatTableModule } from '@angular/material/table';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-
 import { Routes, RouterModule } from "@angular/router";
-
 import { AppComponent } from "./components/app/app.component";
 import { HeaderComponent } from "./components/header/header.component";
 import { MainResponseComponent } from "./components/main-response/main-response.component";
 import { RegistrationFormComponent } from "./components/main-response/registration-form/registration-form.component";
-import { SignInUpService } from "./services/sign-in-up.service";
+import { AuthService } from "./services/auth.service";
+import { SignInUpValidator } from "./validators/sign-in-up.validator";
 import { LoginFormComponent } from "./components/main-response/login-form/login-form.component";
-import { MatDatepickerModule } from "@angular/material/datepicker";
 import { WelcomePageComponent } from "./components/main-response/welcome-page/welcome-page.component";
- 
 import { ScrollingModule } from "@angular/cdk/scrolling";
+import { HomeComponent } from "./components/main-response/home/home.component";
+import { HttpAuthInterceptor } from "src/app/classes/http-auth-interceptor";
+import { QuizListComponent } from './components/main-response/home/quiz-list/quiz-list.component';
+//import { ErrorDialogComponent } from './components/main-response/error-dialog/error-dialog.component';
 
 const appRoutes: Routes = [
   { path: "", component: WelcomePageComponent },
   { path: "login", component: LoginFormComponent },
   { path: "registration", component: RegistrationFormComponent },
-  
+  { path: "home", component: HomeComponent, children: [
+    { path: "quizlist", component: QuizListComponent }] }
 ];
 
 @NgModule({
@@ -32,8 +32,12 @@ const appRoutes: Routes = [
     AppComponent,
     HeaderComponent,
     MainResponseComponent,
+    LoginFormComponent,
     RegistrationFormComponent,
     WelcomePageComponent,
+    HomeComponent,
+    QuizListComponent,
+    //ErrorDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -42,18 +46,19 @@ const appRoutes: Routes = [
     HttpClientModule,
     BrowserAnimationsModule,
     RouterModule.forRoot(appRoutes),
-    MatDatepickerModule,
-    MatTableModule,
-    MatInputModule,
-    MatButtonModule,
-    ScrollingModule
+    ScrollingModule,
   ],
-  entryComponents: [   
-  ],
+  entryComponents: [],
   providers: [
-    SignInUpService,
-    
-  ],
-  bootstrap: [AppComponent]
+    AuthService, 
+    SignInUpValidator,  
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: HttpAuthInterceptor,
+    multi: true
+  },
+  JwtHelperService
+],
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

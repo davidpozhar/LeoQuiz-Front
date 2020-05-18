@@ -1,0 +1,52 @@
+.new-event-dialog {
+    font-family: "Montserrat", sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-wrap: wrap;
+    min-width: fit-content;
+    line-height: 2em;
+    padding-right: 0.7em;
+    padding-left: 0.7em;
+  
+    h1 {
+      display: flex;
+  
+      flex-flow: wrap column;
+    }
+    // box-shadow: 0 5px 50px 12px rgba(37, 36, 36, 0.705);
+  
+    p {
+      margin-top: 1em;
+      display: flex;
+  
+      flex-flow: wrap column;
+    }
+  
+    .submit-button {
+      font-family: "Montserrat", sans-serif;
+      font-size: 1em;
+      padding: 0.5em;
+      margin-bottom: 15px;
+      color: rgb(255, 255, 255);
+      border: white 2px solid;
+      background-color: #0a0a0a00;
+  
+      border-radius: 50px;
+      box-shadow: 0 4px 14px 4px rgba(24, 23, 23, 0.705);
+      min-width: 100px;
+      cursor: pointer;
+    }
+    .submit-button:hover {
+        background-color:rgb(87, 177, 45);
+      }
+      .submit-button:active {
+        background-color: rgb(72, 148, 37);
+      }
+  }
+  
+  @media (max-width: 450px) {
+    body {
+      width: 50%;
+    }
+  }

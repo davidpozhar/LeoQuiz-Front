@@ -1,0 +1,52 @@
+$background-main: #cac5b979;
+
+nav {
+  position: fixed;
+  top: 3vh;
+  right: 5vw;
+  font-size: 3em;
+  cursor: pointer;
+  z-index: 100;
+
+  a {
+    text-decoration: none;
+    color: rgb(72, 148, 37);
+    margin: 1vw;
+    &:hover {
+      color: rgb(87, 177, 45);
+    }
+  }
+
+  .userName {
+    &:hover {
+      color: white;
+    }
+  }
+}
+.nav-tabs {
+  margin: 0% 0%;
+}
+
+div {
+  .filter-line {
+    margin: 5% 0%;
+  }
+
+  .filter-header {
+    display: inline;
+  }
+  .select-block {
+    margin: 0% 0% 0% 0%;
+    display: inline;
+  }
+}
+
+.main {
+  margin-top: 4.1vw;
+  margin-bottom: 3vw;
+  z-index: -4;
+}
+
+.main-body {
+  margin: 0% 5%;
+}

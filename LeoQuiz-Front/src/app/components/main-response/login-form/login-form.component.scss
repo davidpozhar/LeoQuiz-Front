@@ -15,12 +15,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #cac5b9;
+    background-color: #191919;
     box-shadow: 0 5px 50px 12px rgba(37, 36, 36, 0.705);
     border-radius: 10px;
 
     font-family: "Montserrat", sans-serif;
-    color: #5f5530;
+    color: #ffffff;
 
     .form-text-div {
       flex-wrap: wrap;
@@ -71,7 +71,7 @@
       padding: 0.5em;
       color: rgb(231, 229, 229);
       border: none;
-      background-color: #ca5c50;
+      background-color: rgb(72, 148, 37);
 
       border-radius: 50px;
       box-shadow: 0 4px 14px 4px rgba(105, 104, 104, 0.705);
@@ -85,10 +85,10 @@
     }
 
     .submit-button:hover {
-      background-color: rgb(201, 140, 129);
+      background-color:rgb(87, 177, 45);
     }
     .submit-button:active {
-      background-color: rgb(219, 72, 46);
+      background-color: rgb(72, 148, 37);
     }
     .submit-button:disabled {
       background-color: rgb(106, 110, 107);
