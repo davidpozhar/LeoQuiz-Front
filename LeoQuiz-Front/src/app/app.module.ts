@@ -1,7 +1,7 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { NgModule } from "@angular/core";
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { JwtHelperService } from '@auth0/angular-jwt';
+import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { Routes, RouterModule } from "@angular/router";
@@ -52,6 +52,7 @@ const appRoutes: Routes = [
   providers: [
     AuthService, 
     SignInUpValidator,  
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     {
     provide: HTTP_INTERCEPTORS,
     useClass: HttpAuthInterceptor,

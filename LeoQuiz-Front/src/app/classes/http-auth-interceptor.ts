@@ -16,22 +16,22 @@ export class HttpAuthInterceptor implements HttpInterceptor {
 
   inflightAuthRequest = null;
 
-  blacklist: object = [
-    'http://localhost:4200/SignUp',
-    'http://localhost:4200/SignIn'
+  blacklist: string[] = [
+    'http://localhost:5000/Account/SignIn',
+    'http://localhost:5000/Account/SignUp'
   ];
 
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.headers.get("authExempt") === "true") {
+    if (req.headers.get("authExempt") === "true"|| this.blacklistCheckup(req.url)) {
       return next.handle(req);
     }
     const authService = this.injector.get(AuthService);
 
     if (!this.inflightAuthRequest) {
-      //this.inflightAuthRequest = authService.getToken();
+      this.inflightAuthRequest = authService.getToken();
     }
 
     return this.inflightAuthRequest.pipe(
@@ -57,10 +57,9 @@ export class HttpAuthInterceptor implements HttpInterceptor {
           }
 
           if (!this.inflightAuthRequest) {
-            //this.inflightAuthRequest = authService.refreshToken();
+            this.inflightAuthRequest = authService.refreshToken();
 
             if (!this.inflightAuthRequest) {
-              // remove existing tokens
               localStorage.clear();
               this.router.navigate(['/sign-page']);
               return throwError(error);
@@ -87,15 +86,7 @@ export class HttpAuthInterceptor implements HttpInterceptor {
   }
 
   blacklistCheckup($url: string): boolean {
-    let returnValue = false;
-
-    for (const i of Object.keys(this.blacklist)) {
-      if (this.blacklist[i].exec($url) !== null) {
-        returnValue = true;
-        break;
-      }
-    }
-
-    return returnValue;
+    if(this.blacklist?.includes($url)) {return true}
+    return false;
   }
 }
