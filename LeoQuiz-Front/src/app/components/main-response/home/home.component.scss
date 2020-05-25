@@ -1,8 +1,8 @@
-$background-main: #cac5b979;
+@import 'src/styles/variables.scss';
 
 nav {
   position: fixed;
-  top: 3vh;
+  top: 1.5vh;
   right: 5vw;
   font-size: 3em;
   cursor: pointer;
@@ -10,10 +10,13 @@ nav {
 
   a {
     text-decoration: none;
-    color: rgb(72, 148, 37);
+    color: white;
     margin: 1vw;
+    padding: 1%;
+    background-color: transparent;
     &:hover {
-      color: rgb(87, 177, 45);
+      text-decoration: underline;
+      text-decoration-color: $onHover;
     }
   }
 
@@ -22,6 +25,8 @@ nav {
       color: white;
     }
   }
+
+
 }
 .nav-tabs {
   margin: 0% 0%;

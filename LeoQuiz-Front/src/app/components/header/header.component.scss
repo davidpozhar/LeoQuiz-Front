@@ -1,3 +1,5 @@
+@import 'src/styles/variables';
+
 .main-header {
     display: flex;
     justify-content: center;
@@ -10,10 +12,10 @@
     background-color: #191919;
   
     .logo {
-      padding: 1.5%;
-      font-family: "Montserrat", sans-serif;
+      padding: 1%;
+      font-family: $font-family;
       color: #f0e9d7;
-      font-size: 3.2vw;
+      font-size: 2.7vw;
       cursor: pointer;
   
       @media (max-width: 450px) {

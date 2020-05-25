@@ -1,20 +1,28 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders, HttpErrorResponse } from "@angular/common/http";
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { Observable, of } from 'rxjs';
-import { share, map } from 'rxjs/operators';
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpErrorResponse,
+} from "@angular/common/http";
+import { JwtHelperService } from "@auth0/angular-jwt";
+import { Observable, of } from "rxjs";
+import { share, map } from "rxjs/operators";
 import { IUserData } from "../interfaces/user-data";
 import { environment } from "../../environments/environment";
 import { catchError, tap } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { Router } from "@angular/router";
-
+import { AuthErrors } from '../classes/error';
 
 @Injectable()
 export class AuthService {
   private tokenExpirationTimer: any;
   user: IUserData;
-  constructor(private http: HttpClient, private decoder: JwtHelperService,private router: Router) {}
+  constructor(
+    private http: HttpClient,
+    private decoder: JwtHelperService,
+    private router: Router
+  ) {}
 
   signUp(userSignUpData: IUserData) {
     return this.http
@@ -63,12 +71,9 @@ export class AuthService {
     }
     const loadedUser: IUserData = {
       email: userData.email,
-      name: userData.name,
-      surname: userData.surname,
-      id: userData.id,
-      userRole: userData.userRole,
+      password: userData.password
     };
-    return;
+    return this.singIn(loadedUser);
   }
 
   logout() {
@@ -103,26 +108,26 @@ export class AuthService {
   }
 
   refreshToken(): Observable<string> {
-    const url = 'url to refresh token here';
+    const url = "url to refresh token here";
 
-    const refreshToken = localStorage.getItem('refreshToken');
-    const expiredToken = localStorage.getItem('token');
+    const refreshToken = localStorage.getItem("refreshToken");
+    const expiredToken = localStorage.getItem("token");
 
     return this.http
       .get(url, {
         headers: new HttpHeaders()
-          .set('refreshToken', refreshToken)
-          .set('token', expiredToken),
-        observe: 'response'
+          .set("refreshToken", refreshToken)
+          .set("token", expiredToken),
+        observe: "response",
       })
       .pipe(
         share(),
-        map(res => {
-          const token = res.headers.get('token');
-          const newRefreshToken = res.headers.get('refreshToken');
+        map((res) => {
+          const token = res.headers.get("token");
+          const newRefreshToken = res.headers.get("refreshToken");
 
-          localStorage.setItem('refreshToken', newRefreshToken);
-          localStorage.setItem('token', token);
+          localStorage.setItem("refreshToken", newRefreshToken);
+          localStorage.setItem("token", token);
 
           return token;
         })
@@ -130,7 +135,7 @@ export class AuthService {
   }
 
   getToken(): Observable<string> {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     const isTokenExpired = this.decoder.isTokenExpired(token);
 
     if (!isTokenExpired) {
@@ -139,18 +144,19 @@ export class AuthService {
 
     return this.refreshToken();
   }
+  
   private errorHandling(errorResponse: HttpErrorResponse) {
     console.log(errorResponse);
 
-    switch (errorResponse.error) {
-      case "Bad password": {
-        return throwError(errorResponse.error);
+    switch (errorResponse.error.Message) {
+      case AuthErrors.wrongPassword : {
+        return throwError(errorResponse.error.Message);
       }
-      case "Email is in use.": {
-        return throwError(errorResponse.error);
+      case AuthErrors.emailInUse: {
+        return throwError(errorResponse.error.Message);
       }
-      case "There is no email": {
-        return throwError(errorResponse.error);
+      case AuthErrors.noEmail: {
+        return throwError(errorResponse.error.Message);
       }
     }
 

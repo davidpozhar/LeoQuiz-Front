@@ -52,10 +52,11 @@
           type="email"
           class="field"
           placeholder="example@gmail.com"
+          [class.red-border] = "authError === ErrorType.emailInUse"
         />
         <span
           *ngIf="
-            registrationForm.get('userEmail').hasError('incorrectEmail') &&
+            authError === ErrorType.emailInUse &&
             registrationForm.get('userEmail').touched
           "
           >Started with letter! Without special symbols!</span

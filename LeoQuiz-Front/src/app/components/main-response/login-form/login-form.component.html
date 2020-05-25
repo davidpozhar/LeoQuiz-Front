@@ -16,9 +16,10 @@
           type="email"
           class="field"
           placeholder="example@gmail.com"
+          [class.red-border] = "authError === ErrorType.noEmail"
         />
   
-        <span *ngIf="loginForm.get('userEmail').hasError('doesNotRegistered')"
+        <span *ngIf="authError === ErrorType.noEmail"
           >Email does not registered!</span
         >
       </div>
@@ -30,10 +31,11 @@
           name="userPassword"
           type="password"
           class="field"
+          [class.red-border] = "authError === ErrorType.wrongPassword"
         />
         <span
           *ngIf="
-            loginForm.get('userPassword').hasError('incorrectPassword') &&
+            authError === ErrorType.wrongPassword &&
             loginForm.get('userPassword').touched
           "
           >Incorrect password for this account!</span

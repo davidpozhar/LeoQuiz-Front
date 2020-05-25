@@ -1,1 +1,20 @@
-<p>quiz-list works!</p>
+<table class="table">
+  <tr *ngFor="let quiz of quizzes" {{quiz}}>
+    <td class="quiz-id">{{ quiz.id }}</td>
+    <td class="quiz-name">{{ quiz.name }}</td>
+    <td class="action-button">
+        <div class="btn-group" mdbDropdown>
+            <button mdbDropdownToggle type="button"  class="dropdown-toggle waves-light"
+              mdbWavesEffect>
+              Basic dropdown
+            </button>
+          
+            <div class="dropdown-menu dropdown-primary">
+              <a class="dropdown-item" href="#">Delete</a>
+              <a class="dropdown-item" href="#">Edit</a>
+              
+            </div>
+          </div>
+    </td>
+  </tr>
+</table>

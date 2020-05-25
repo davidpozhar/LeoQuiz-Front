@@ -1,7 +1,6 @@
 import { FormControl, FormGroup } from "@angular/forms";
 
 export class SignInUpValidator {
-
   nameValidator(control: FormControl): { [key: string]: boolean } {
     if (control !== undefined) {
       let name: string = control.value;
@@ -95,7 +94,6 @@ export class SignInUpValidator {
   }
 
   matchPasswordsValidator(group: FormGroup): { [key: string]: boolean } {
-
     const password: string = group.value.userPassword;
     const confirmPassword: string = group.value.userConfirmPassword;
 

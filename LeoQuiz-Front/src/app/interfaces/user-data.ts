@@ -1,4 +1,5 @@
 export interface IUserData {
+  [x: string]: any;
   id?: string;
   name?: string;
   surname?: string;

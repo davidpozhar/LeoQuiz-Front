@@ -1,20 +1,25 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormControl, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { IUserData } from "../../../interfaces/user-data";
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
+import { AuthErrors } from "src/app/classes/error";
+import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
 
 @Component({
   selector: "app-login-form",
   templateUrl: "./login-form.component.html",
-  styleUrls: ["./login-form.component.scss"]
+  styleUrls: ["./login-form.component.scss"],
 })
 export class LoginFormComponent implements OnInit {
   loginForm: FormGroup;
-  error: string = null;
+  ErrorType = AuthErrors;
+  authError: string = "";
 
   constructor(
     private signInUpService: AuthService,
+    public dialog: MatDialog,
     private router: Router
   ) {}
 
@@ -26,7 +31,7 @@ export class LoginFormComponent implements OnInit {
   }
 
   onSubmit() {
-    this.removeRedBorders();
+    this.authError = "";
     if (this.loginForm.invalid) {
       return;
     }
@@ -45,34 +50,22 @@ export class LoginFormComponent implements OnInit {
       },
       (errorData) => {
         console.log(errorData);
-        if (errorData === "There is no email") {
-          this.getRedBorderEmailInput();
-        } else if (errorData === "Bad password") {
-          this.getRedBorderPasswordInput();
-        } 
+        this.authError = errorData;
+        if (errorData.name === AuthErrors.undefinedError) {
+          this.openErrorResponseDialog(errorData.message);
+        }
       }
     );
   }
 
-  removeRedBorders() {
-    const emailInput = document.getElementsByName("userEmail")[0];
-    emailInput.classList.remove("red-border");
+  openErrorResponseDialog(errorName: string) {
+    const dialogRef = this.dialog.open(ErrorDialogComponent, {
+      width: "fit-content",
+      data: errorName,
+    });
 
-    const passwordInput = document.getElementsByName("userPassword")[0];
-    passwordInput.classList.remove("red-border");
-  }
-
-  getRedBorderEmailInput() {
-    this.loginForm.get("userEmail").setErrors({ doesNotRegistered: true });
-
-    const emailInput = document.getElementsByName("userEmail")[0];
-    emailInput.classList.add("red-border");
-  }
-
-  getRedBorderPasswordInput() {
-    this.loginForm.get("userPassword").setErrors({ incorrectPassword: true });
-
-    const passwordInput = document.getElementsByName("userPassword")[0];
-    passwordInput.classList.add("red-border");
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log("The dialog was closed");
+    });
   }
 }
