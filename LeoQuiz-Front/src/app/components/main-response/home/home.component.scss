@@ -4,7 +4,7 @@ nav {
   position: fixed;
   top: 1.5vh;
   right: 5vw;
-  font-size: 3em;
+  font-size: 2.5em;
   cursor: pointer;
   z-index: 100;
 
@@ -14,35 +14,34 @@ nav {
     margin: 1vw;
     padding: 1%;
     background-color: transparent;
+  }
+
+  .userName {
+    font-size: 0.5em;
+  }
+
+  .logout {
     &:hover {
       text-decoration: underline;
       text-decoration-color: $onHover;
     }
   }
 
-  .userName {
-    &:hover {
-      color: white;
-    }
-  }
-
 
 }
+
+a {
+  color: black;
+}
+
 .nav-tabs {
   margin: 0% 0%;
-}
 
-div {
-  .filter-line {
-    margin: 5% 0%;
-  }
-
-  .filter-header {
-    display: inline;
-  }
-  .select-block {
-    margin: 0% 0% 0% 0%;
-    display: inline;
+  a{
+    padding: 1em;
+    background: rgba(177, 152, 145, .3);
+    border-right: 1px solid #b19891;
+    color: #695753;
   }
 }
 

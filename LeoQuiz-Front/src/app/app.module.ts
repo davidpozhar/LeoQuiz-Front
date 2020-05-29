@@ -33,7 +33,8 @@ import { QuestionComponent } from './components/main-response/home/question/ques
     WelcomePageComponent,
     HomeComponent,
     ErrorDialogComponent,
-    QuestionComponent
+    QuestionComponent,
+    QuizListComponent
   ],
   imports: [
     BrowserModule,

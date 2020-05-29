@@ -5,6 +5,7 @@ import { LoginFormComponent } from "./components/main-response/login-form/login-
 import { RegistrationFormComponent } from "./components/main-response/registration-form/registration-form.component";
 import { QuizListComponent } from "./components/main-response/home/quiz-list/quiz-list.component";
 import { HomeComponent } from "./components/main-response/home/home.component";
+import { AuthGuard, QuizListGuard } from "./services/auth.guard";
 
 const appRoutes: Routes = [
   { path: "", component: WelcomePageComponent },
@@ -13,7 +14,12 @@ const appRoutes: Routes = [
   {
     path: "home",
     component: HomeComponent,
-    children: [{ path: "quizlist", component: QuizListComponent }],
+    canActivate: [AuthGuard],
+    children: [
+      { path: "quizlist",
+      component: QuizListComponent,
+      canActivate: [AuthGuard]
+    }],
   },
 ];
 

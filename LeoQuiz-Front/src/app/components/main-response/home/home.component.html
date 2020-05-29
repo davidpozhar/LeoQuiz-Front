@@ -1,11 +1,33 @@
 <nav>
-    <a class="userName" title="{{userEmail}}">{{name}}</a>
-    <a (click)="onLogout()">Logout</a>
+    <a class="logout" (click)="onLogout()">Logout</a>
   </nav>
   
   <div class="main">
     <div class="main-body">
       <div class="nav-bar">
+        <ul class="nav-tabs">
+          <li
+            routerLink="quizlist"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a>Quiz List</a>
+          </li>
+          <li
+            routerLinkActive="active"
+            routerLink=""
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a>Interviewees List</a>
+          </li>
+          <li
+            routerLinkActive="active"
+            routerLink=""
+            [routerLinkActiveOptions]="{ exact: true }"
+          >
+            <a>Settings</a>
+          </li>
+        </ul>
       </div>
       <div class="outlet">
         <router-outlet></router-outlet>

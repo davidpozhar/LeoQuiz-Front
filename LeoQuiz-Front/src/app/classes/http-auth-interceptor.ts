@@ -86,7 +86,6 @@ export class HttpAuthInterceptor implements HttpInterceptor {
   }
 
   blacklistCheckup($url: string): boolean {
-    if(this.blacklist?.includes($url)) {return true}
-    return false;
+    return this.blacklist?.includes($url);
   }
 }

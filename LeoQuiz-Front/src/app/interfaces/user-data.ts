@@ -6,5 +6,5 @@ export interface IUserData {
   email?: string;
   age?: string;
   password?: string;
-  userRole?: string;
+  userRole?: number;
 }

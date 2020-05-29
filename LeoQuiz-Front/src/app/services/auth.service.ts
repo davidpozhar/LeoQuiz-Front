@@ -5,19 +5,20 @@ import {
   HttpErrorResponse,
 } from "@angular/common/http";
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { Observable, of } from "rxjs";
+import { Observable, of, BehaviorSubject } from "rxjs";
 import { share, map } from "rxjs/operators";
 import { IUserData } from "../interfaces/user-data";
 import { environment } from "../../environments/environment";
 import { catchError, tap } from "rxjs/operators";
 import { throwError } from "rxjs";
 import { Router } from "@angular/router";
-import { AuthErrors } from '../classes/error';
+import { AuthErrors } from "../classes/error";
+import { User } from "../classes/user";
 
 @Injectable()
 export class AuthService {
+  user = new BehaviorSubject<User>(null);
   private tokenExpirationTimer: any;
-  user: IUserData;
   constructor(
     private http: HttpClient,
     private decoder: JwtHelperService,
@@ -26,9 +27,11 @@ export class AuthService {
 
   signUp(userSignUpData: IUserData) {
     return this.http
-      .post<string>(environment.apiUrl + "/Account/SignUp", userSignUpData)
+      .post<string>(environment.apiUrl + "/Account/SignUp", userSignUpData, {
+        responseType: "text" as "json",
+      })
       .pipe(
-        catchError(this.errorHandling),
+        catchError(this.errorHandler),
         tap((responseData) => {
           this.authHandling(responseData);
         })
@@ -38,9 +41,11 @@ export class AuthService {
   singIn(userLoginInData: IUserData) {
     console.log(userLoginInData);
     return this.http
-      .post<string>(environment.apiUrl + "/Account/SignIn", userLoginInData)
+      .post<string>(environment.apiUrl + "/Account/SignIn", userLoginInData, {
+        responseType: "text" as "json",
+      })
       .pipe(
-        catchError(this.errorHandling),
+        catchError(this.errorHandler),
         tap((responseData) => {
           this.authHandling(responseData);
         })
@@ -52,7 +57,7 @@ export class AuthService {
     return this.http
       .get<IUserData>(environment.apiUrl + "/User/GetCurrentUser")
       .pipe(
-        catchError(this.errorHandling),
+        catchError(this.errorHandler),
         tap((responseData) => {
           this.userHandling(
             responseData.email,
@@ -65,18 +70,19 @@ export class AuthService {
   }
 
   autoLogin() {
-    const userData: IUserData = JSON.parse(localStorage.getItem("userData"));
+    const userData: User = JSON.parse(localStorage.getItem("userData"));
     if (!userData) {
       return;
     }
-    const loadedUser: IUserData = {
-      email: userData.email,
-      password: userData.password
-    };
-    return this.singIn(loadedUser);
+    const loadedUser = new User(
+      userData.email,
+      userData.userRole
+    );
+    this.user.next(loadedUser);
   }
 
   logout() {
+    this.user.next(null);
     this.http.get(environment.apiUrl + "/Account/Logout");
     this.router.navigate(["/login"]);
     localStorage.removeItem("userData");
@@ -88,30 +94,33 @@ export class AuthService {
   }
 
   private authHandling(token: string) {
-    localStorage.setItem("string", JSON.stringify(token));
-    this.getUserInfo();
+    console.log("setToken");
+    localStorage.setItem("token", JSON.stringify(token));
   }
 
   private userHandling(
     email: string,
     name: string,
     surname: string,
-    userRole: string
+    userRole: number
   ) {
+    console.log("SetUserData");
     const user: IUserData = {
       email: email,
       name: name,
       surname: surname,
       userRole: userRole,
     };
+    const userAuth = new User(email, userRole);
+    this.user.next(userAuth);
     localStorage.setItem("userData", JSON.stringify(user));
   }
 
   refreshToken(): Observable<string> {
-    const url = "url to refresh token here";
+    const url = environment.apiUrl + "/Account/RefreshToken";
 
     const refreshToken = localStorage.getItem("refreshToken");
-    const expiredToken = localStorage.getItem("token");
+    const expiredToken = JSON.parse(localStorage.getItem("token"));
 
     return this.http
       .get(url, {
@@ -126,8 +135,8 @@ export class AuthService {
           const token = res.headers.get("token");
           const newRefreshToken = res.headers.get("refreshToken");
 
-          localStorage.setItem("refreshToken", newRefreshToken);
-          localStorage.setItem("token", token);
+          localStorage.setItem("refreshToken", JSON.stringify(newRefreshToken));
+          localStorage.setItem("token", JSON.stringify(token));
 
           return token;
         })
@@ -135,7 +144,7 @@ export class AuthService {
   }
 
   getToken(): Observable<string> {
-    const token = localStorage.getItem("token");
+    const token = JSON.parse(localStorage.getItem("token"));
     const isTokenExpired = this.decoder.isTokenExpired(token);
 
     if (!isTokenExpired) {
@@ -144,12 +153,11 @@ export class AuthService {
 
     return this.refreshToken();
   }
-  
-  private errorHandling(errorResponse: HttpErrorResponse) {
-    console.log(errorResponse);
 
+  private errorHandler(errorResponse: HttpErrorResponse) {
+    console.log(errorResponse);
     switch (errorResponse.error.Message) {
-      case AuthErrors.wrongPassword : {
+      case AuthErrors.wrongPassword: {
         return throwError(errorResponse.error.Message);
       }
       case AuthErrors.emailInUse: {

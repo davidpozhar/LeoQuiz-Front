@@ -3,6 +3,7 @@ import { AuthService } from "src/app/services/auth.service";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
 import { MatDialog } from "@angular/material/dialog";
+import { AuthErrors } from 'src/app/classes/error';
 
 @Component({
   selector: "app-home",
@@ -14,23 +15,24 @@ export class HomeComponent implements OnInit {
   name: string;
   userEmail: string;
   dialog: MatDialog;
+  authError: any;
 
   constructor(
-    private signInUp: AuthService,
+    private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute 
   ) {}
 
   ngOnInit() {
     this.name =
-      JSON.parse(localStorage.getItem("userData")).firstName +
+      JSON.parse(localStorage.getItem("userData")).name +
       " " +
-      JSON.parse(localStorage.getItem("userData")).secondName;
+      JSON.parse(localStorage.getItem("userData")).surname;
       this.userEmail = JSON.parse(localStorage.getItem("userData")).email;
   }
 
   onLogout() {
-    this.signInUp.logout();
+    this.authService.logout();
   }
 
   private openErrorResponseDialog(errorName: string) {

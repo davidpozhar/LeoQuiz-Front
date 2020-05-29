@@ -18,7 +18,7 @@ export class LoginFormComponent implements OnInit {
   authError: string = "";
 
   constructor(
-    private signInUpService: AuthService,
+    private authService: AuthService,
     public dialog: MatDialog,
     private router: Router
   ) {}
@@ -41,11 +41,24 @@ export class LoginFormComponent implements OnInit {
     };
 
     console.log("start login in");
-    this.signInUpService.singIn(loginData).subscribe(
+    this.authService.singIn(loginData).subscribe(
       (responseData) => {
         console.log("end");
 
         this.loginForm.reset();
+      },
+      (errorData) => {
+        console.log(errorData);
+        this.authError = errorData;
+        if (errorData.name === AuthErrors.undefinedError) {
+          this.openErrorResponseDialog(errorData.message);
+        }
+      }
+    );
+
+    this.authService.getUserInfo().subscribe(
+      (responseData) => {
+        console.log("getInfo-end");
         this.router.navigate(["/home"]);
       },
       (errorData) => {

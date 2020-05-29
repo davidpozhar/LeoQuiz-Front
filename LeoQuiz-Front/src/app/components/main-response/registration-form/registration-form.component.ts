@@ -69,14 +69,12 @@ export class RegistrationFormComponent implements OnInit {
       email: this.registrationForm.get("userEmail").value,
       password: this.registrationForm.get("passwords").get("userPassword")
         .value,
-      userRole: "2",
+      userRole: 1,
     };
 
     this.authService.signUp(inputData).subscribe(
       (responseUserData) => {
         this.registrationForm.reset();
-
-        this.router.navigate(["/home"]);
       },
       (errorData) => {
         console.log(errorData);
@@ -88,6 +86,20 @@ export class RegistrationFormComponent implements OnInit {
     );
 
     console.log(inputData);
+
+    this.authService.getUserInfo().subscribe(
+      (responseData) => {
+        console.log("getInfo-end");
+        this.router.navigate(["/home"]);
+      },
+      (errorData) => {
+        console.log(errorData);
+        this.authError = errorData;
+        if (errorData.name === AuthErrors.undefinedError) {
+          this.openErrorResponseDialog(errorData.message);
+        }
+      }
+    );
   }
 
   openErrorResponseDialog(errorName: string) {
