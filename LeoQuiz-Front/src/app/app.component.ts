@@ -11,15 +11,16 @@ export class AppComponent implements OnInit, OnDestroy {
   title = "LeoQuiz";
 
   constructor(
-    private signInUpService: AuthService,
+    private authService: AuthService,
     private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.signInUpService.autoLogin;
+    console.log("Init");
+    this.authService.autoLogin();
   }
 
   ngOnDestroy(): void {
-    this.signInUpService.logout;
+    this.authService.logout();
   }
 }

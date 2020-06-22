@@ -1,41 +1,27 @@
-@import 'src/styles/variables';
+@import "src/styles/variables";
 
 .main-header {
-    display: flex;
-    align-content: center;
-    min-height: fit-content;
-    z-index: 100;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    background-color: #191919;
-  
-    .logo {
-      padding: 1%;
-      font-family: $font-family;
-      color: #f0e9d7;
-      font-size: 2.7vw;
-      cursor: pointer;
-      padding-left: 5%;
-      
+  height: 70px;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-      
-      @media (max-width: 450px) {
-        font-size: 10vw;
-        min-height: fit-content;
-        }
-    }
-  
-    .logo:focus {
-      outline: none;
-    }
-  
-    @media (max-width: 450px) {
-      min-height: fit-content;
-  
-      padding-bottom: 1vw;
-      padding-top: 1vw;
-    }
+  align-content: center;
+  min-height: fit-content;
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #191919;
+  border-bottom: 0.3px solid $corduroy;
+
+  .logo {
+    font-family: $font-family;
+    color: #f0e9d7;
+    font-size: 24px;
+    font-weight: 700;
+    margin-left: 30px;
+    cursor: pointer;
   }
+
+  .logo:focus {
+    outline: none;
+  }
+}

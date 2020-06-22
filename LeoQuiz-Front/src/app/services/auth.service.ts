@@ -53,23 +53,26 @@ export class AuthService {
   }
 
   getUserInfo() {
-    console.log("Login!");
+    console.log("getUserInfo!");
     return this.http
       .get<IUserData>(environment.apiUrl + "/User/GetCurrentUser")
       .pipe(
         catchError(this.errorHandler),
         tap((responseData) => {
+          console.log("responseData: ");
+          console.log(responseData);
           this.userHandling(
             responseData.email,
             responseData.name,
             responseData.surname,
-            responseData.userRole
+            responseData.userRoleId
           );
         })
       );
   }
 
   autoLogin() {
+    console.log("authlogin");
     const userData: User = JSON.parse(localStorage.getItem("userData"));
     if (!userData) {
       return;
@@ -86,6 +89,7 @@ export class AuthService {
     this.http.get(environment.apiUrl + "/Account/Logout");
     this.router.navigate(["/login"]);
     localStorage.removeItem("userData");
+    localStorage.removeItem("token");
     if (this.tokenExpirationTimer) {
       clearTimeout(this.tokenExpirationTimer);
     }
@@ -105,7 +109,8 @@ export class AuthService {
     userRole: number
   ) {
     console.log("SetUserData");
-    const user: IUserData = {
+    console.log("Role: " + userRole);
+    const userData: IUserData = {
       email: email,
       name: name,
       surname: surname,
@@ -113,7 +118,9 @@ export class AuthService {
     };
     const userAuth = new User(email, userRole);
     this.user.next(userAuth);
-    localStorage.setItem("userData", JSON.stringify(user));
+    console.log("userHandling object: ");
+    console.log(userData);
+    localStorage.setItem("userData", JSON.stringify(userData));
   }
 
   refreshToken(): Observable<string> {

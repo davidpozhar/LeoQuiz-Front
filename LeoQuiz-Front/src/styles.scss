@@ -1,28 +1,21 @@
+@import "styles/variables.scss";
 
-// Custom Theming for Angular Material
-// For more information: https://material.angular.io/guide/theming
-// Plus imports for other components in your app.
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: $font-family;
+  min-height: 100%;
+  background-image: url(assets/background.jpg);
+  background-repeat: no-repeat;
+  background-position: left top;
+  background-attachment: fixed;
+  background-size: cover;
+}
 
-// Include the common styles for Angular Material. We include this here so that you only
-// have to load a single css file for Angular Material in your app.
-// Be sure that you only ever include this mixin once!
-
-// Define the palettes for your theme using the Material Design palettes available in palette.scss
-// (imported above). For each palette, you can optionally specify a default, lighter, and darker
-// hue. Available color palettes: https://material.io/design/color/
-// Include theme styles for core and each component used in your app.
-// Alternatively, you can import and @include the theme mixins for each component
-// that you are using.
-
-/* You can add global styles to this file, and also import other style files */
-@import 'styles/variables.scss';
-
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
-    min-width: 256px;
-    background-image: url(assets/background.jpg);
-    background-repeat: no-repeat;
-    background-position: left top;
-    background-attachment: fixed;
-    background-size: 100%;
-  } 
+button:hover {
+  cursor: pointer;
+  background-color: $apple;
+}

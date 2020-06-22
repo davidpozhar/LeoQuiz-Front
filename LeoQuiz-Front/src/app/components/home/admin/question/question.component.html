@@ -1,0 +1,49 @@
+<div class="question-wrapper">
+  <div class="question-form">
+    <div class="div-for-field">
+      <p for="questionText">Text</p>
+      <textarea
+        name="questionText"
+        class="field"
+        [(ngModel)]="question && question.text"
+      ></textarea>
+    </div>
+
+    <div class="div-for-field">
+      <p for="questionTimeLimit">Time limit</p>
+      <div class="time-limit-wrapper">
+        <input
+          type="number"
+          [value]="question && question.timeLimit.hours"
+          (change)="onTimeLimitChange($event, 'hour')"
+          min="0"
+        />
+        <p>:</p>
+        <input
+          type="number"
+          [value]="question && question.timeLimit.minutes"
+          (change)="onTimeLimitChange($event, 'minute')"
+          min="0"
+        />
+      </div>
+    </div>
+
+    <div class="answers-wrapper">
+      <p>Answers</p>
+      <div
+        class="answer-row"
+        *ngFor="let answer of question && question.answers"
+      >
+        <input class="answer-input" [(ngModel)]="answer && answer.text" /><input
+          type="checkbox"
+          class="is-correct"
+          [(ngModel)]="answer && answer.isCorrect"
+        /><button class="btn-delete" (click)="deleteAnswer(answer.id)">
+          <img src="assets/rubbish.png" alt="Rubbish" />
+        </button>
+      </div>
+      <button class="btn-add" (click)="addAnswer()">Add</button>
+    </div>
+    <button class="btn-confirm" (click)="confirm()">Confirm</button>
+  </div>
+</div>

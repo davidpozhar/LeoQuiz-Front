@@ -1,22 +1,20 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { catchError } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
-import { throwError } from 'rxjs';
-import { GlobalErrors } from '../classes/error';
-import { IQuestionData } from '../interfaces/question-data';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
+import { catchError } from "rxjs/operators";
+import { environment } from "src/environments/environment";
+import { throwError } from "rxjs";
+import { GlobalErrors } from "../classes/error";
+import { IQuestionData } from "../interfaces/question-data";
 
 @Injectable()
 export class QuestionService {
-  apiUrl: string = environment.apiUrl + "/Quуіешщт";
+  apiUrl: string = environment.apiUrl + "/Question";
 
   constructor(private http: HttpClient) {}
 
   getQuestionList() {
     return this.http
-      .get<Array<IQuestionData>>(
-        this.apiUrl
-      )
+      .get<Array<IQuestionData>>(this.apiUrl)
       .pipe(catchError(this.errorHandling));
   }
 
@@ -38,12 +36,11 @@ export class QuestionService {
       .pipe(catchError(this.errorHandling));
   }
 
-  deleteQuestion(question: IQuestionData) {
+  deleteQuestion(id: number) {
     return this.http
-      .delete(this.apiUrl + "/" + question.id)
+      .delete(this.apiUrl + "/" + id)
       .pipe(catchError(this.errorHandling));
   }
-
 
   private errorHandling(errorResponse: HttpErrorResponse) {
     if (
@@ -52,7 +49,7 @@ export class QuestionService {
     ) {
       return throwError({
         name: errorResponse.name,
-        message: errorResponse.message
+        message: errorResponse.message,
       });
     }
     return throwError(errorResponse.message);

@@ -5,7 +5,7 @@ import { IUserData } from "../../../interfaces/user-data";
 import { AuthService } from "src/app/services/auth.service";
 import { Router } from "@angular/router";
 import { AuthErrors } from "src/app/classes/error";
-import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
+import { ErrorDialogComponent } from "../../error-dialog/error-dialog.component";
 
 @Component({
   selector: "app-login-form",
@@ -44,22 +44,20 @@ export class LoginFormComponent implements OnInit {
     this.authService.singIn(loginData).subscribe(
       (responseData) => {
         console.log("end");
-
         this.loginForm.reset();
-      },
-      (errorData) => {
-        console.log(errorData);
-        this.authError = errorData;
-        if (errorData.name === AuthErrors.undefinedError) {
-          this.openErrorResponseDialog(errorData.message);
-        }
-      }
-    );
-
-    this.authService.getUserInfo().subscribe(
-      (responseData) => {
-        console.log("getInfo-end");
-        this.router.navigate(["/home"]);
+        return this.authService.getUserInfo().subscribe(
+          (responseData) => {
+            console.log("getInfo-end");
+            this.router.navigate(["/home"]);
+          },
+          (errorData) => {
+            console.log(errorData);
+            this.authError = errorData;
+            if (errorData.name === AuthErrors.undefinedError) {
+              this.openErrorResponseDialog(errorData.message);
+            }
+          }
+        );
       },
       (errorData) => {
         console.log(errorData);

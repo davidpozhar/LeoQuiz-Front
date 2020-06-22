@@ -1,5 +1,4 @@
-@import 'src/styles/variables.scss';
-
+@import "src/styles/variables.scss";
 
 .container {
   width: 100%;
@@ -10,14 +9,14 @@
   justify-content: center;
 
   .registration-form {
-    margin-top: 5vw;
+    margin-top: 10px;
     width: fit-content;
     padding: 1.5vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: $background; 
+    background-color: $codGray;
     box-shadow: 0 5px 50px 12px rgba(37, 36, 36, 0.705);
     border-radius: 10px;
 
@@ -27,57 +26,44 @@
     .form-text-div {
       flex-wrap: wrap;
       width: fit-content;
-      padding: 2vh;
-      font-size: calc(1vw + 2vh);
+      padding: 5px;
+      font-size: 20px;
     }
 
     .div-for-field {
-      margin: 0.5vw;
-      margin-right: 1.5vw;
-      margin-left: 1.5vw;
+      margin: 2px;
+      margin-right: 5px;
+      margin-left: 5px;
       min-width: fit-content;
       max-width: 260px;
       display: flex;
       flex-direction: column;
       justify-content: center;
 
-      @media (max-width: 450px) {
-        font-size: 1em;
-        margin: 0.7vw;
-        margin-right: 3.5vw;
-        margin-left: 3.5vw;
-      }
-
       label {
-        font-weight:bold;
+        margin-top: 10px;
+        font-weight: bold;
       }
-
     }
 
     div {
       .div-for-field {
-        margin: 0.5vw;
-        margin-right: 1.5vw;
-        margin-left: 1.5vw;
+        margin: 2px;
+        margin-right: 5px;
+        margin-left: 5px;
         min-width: fit-content;
         max-width: 260px;
         display: flex;
         flex-direction: column;
         justify-content: center;
-
-        @media (max-width: 450px) {
-          font-size: 1em;
-          margin: 0.7vw;
-          margin-right: 3.5vw;
-          margin-left: 3.5vw;
-        }
       }
     }
 
     .field {
       padding-left: 2%;
       padding-right: 2%;
-      font-size: 1.7em;
+      margin-top: 5px;
+      font-size: 20px;
       font-family: $font-family;
       border: rgb(117, 115, 115) 2px solid;
       background-color: rgb(231, 229, 229);
@@ -90,38 +76,29 @@
 
     .submit-button {
       font-family: $font-family;
-      font-size: 1.5em;
-      padding: 0.5em;
+      font-size: 20px;
+      padding: 5px;
+      margin: 10px 0;
       color: rgb(231, 229, 229);
       border: none;
-      background-color: $onActive;
+      background-color: $fruitSalad;
 
       border-radius: 50px;
       box-shadow: 0 4px 14px 4px rgba(105, 104, 104, 0.705);
       min-width: 100px;
       cursor: pointer;
-
-      @media (max-width: 450px) {
-        font-size: 1.2em;
-        min-width: 60px;
-      }
     }
 
     .submit-button:hover {
-      background-color: $onHover;
+      background-color: $apple;
     }
     .submit-button:active {
-      background-color: $onActive;
+      background-color: $fruitSalad;
     }
     .submit-button:disabled {
-      background-color: $disabled;
+      background-color: $corduroy;
       color: rgb(231, 229, 229);
       cursor: no-drop;
-
-      @media (max-width: 450px) {
-        font-size: 1.2em;
-        min-width: 60px;
-      }
     }
 
     a {

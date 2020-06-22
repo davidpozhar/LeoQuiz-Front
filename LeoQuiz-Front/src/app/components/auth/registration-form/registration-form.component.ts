@@ -6,7 +6,7 @@ import { SignInUpValidator } from "src/app/validators/sign-in-up.validator";
 import { Router } from "@angular/router";
 import { AuthErrors } from "src/app/classes/error";
 import { MatDialog } from "@angular/material/dialog";
-import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
+import { ErrorDialogComponent } from "../../error-dialog/error-dialog.component";
 
 @Component({
   selector: "app-registration-form",
@@ -75,6 +75,19 @@ export class RegistrationFormComponent implements OnInit {
     this.authService.signUp(inputData).subscribe(
       (responseUserData) => {
         this.registrationForm.reset();
+        return this.authService.getUserInfo().subscribe(
+          (responseData) => {
+            console.log("getInfo-end");
+            this.router.navigate(["/home"]);
+          },
+          (errorData) => {
+            console.log(errorData);
+            this.authError = errorData;
+            if (errorData.name === AuthErrors.undefinedError) {
+              this.openErrorResponseDialog(errorData.message);
+            }
+          }
+        );
       },
       (errorData) => {
         console.log(errorData);

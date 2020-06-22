@@ -1,0 +1,21 @@
+<div class="quiz-list-wrapper">
+  <table class="quiz-list-table">
+    <tr class="quiz-list-row quiz-list-header">
+      <th class="quiz-id">Id</th>
+      <th>Name</th>
+      <th class="quiz-action">Action</th>
+    </tr>
+    <tr class="quiz-list-row" *ngFor="let quiz of quizzes">
+      <td class="quiz-id">{{ quiz.id }}</td>
+      <td class="quiz-name" routerLink="/home/quiz/{{ quiz.id }}">
+        {{ quiz.name }}
+      </td>
+      <td class="quiz-action">
+        <button class="btn-delete" (click)="Delete(quiz.id)">
+          <img src="assets/rubbish.png" alt="Rubbish" />
+        </button>
+      </td>
+    </tr>
+  </table>
+  <button class="btn-create" routerLink="/home/quiz">Create</button>
+</div>

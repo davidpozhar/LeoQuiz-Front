@@ -1,4 +1,4 @@
-@import 'src/styles/variables.scss';
+@import "src/styles/variables.scss";
 
 .container {
   width: 100%;
@@ -10,12 +10,12 @@
 
   .registration-form {
     width: fit-content;
-    padding: 1.5vw;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: $background;
+    background-color: $codGray;
     box-shadow: 0 5px 50px 12px rgba(37, 36, 36, 0.705);
     border-radius: 10px;
 
@@ -25,26 +25,18 @@
     .form-text-div {
       flex-wrap: wrap;
       width: fit-content;
-      padding: 2vh;
-      font-size: calc(1vw + 3vh);
+      padding: 2px;
     }
 
     .div-for-field {
-      margin: 0.5vw;
-      margin-right: 1.5vw;
-      margin-left: 1.5vw;
+      margin: 1px;
+      margin-right: 1.5px;
+      margin-left: 1.5px;
       min-width: fit-content;
       max-width: 290px;
       display: flex;
       flex-direction: column;
       justify-content: center;
-
-      @media (max-width: 450px) {
-        font-size: 1em;
-        margin: 0.7vw;
-        margin-right: 3.5vw;
-        margin-left: 3.5vw;
-      }
 
       label {
         font-weight: bold;
@@ -52,9 +44,8 @@
     }
 
     .field {
-      padding-left: 2%;
-      padding-right: 2%;
-      font-size: 1.7em;
+      padding: 10px 10px;
+      font-size: 16px;
       font-family: "Montserrat", sans-serif;
       border: rgb(117, 115, 115) 2px solid;
       background-color: rgb(231, 229, 229);
@@ -62,43 +53,34 @@
     }
 
     .red-border {
-      border-color: $redBorder;
+      border-color: $red;
     }
 
     .submit-button {
-      font-family: "Montserrat", sans-serif;
-      font-size: 1.5em;
-      padding: 0.5em;
+      font-family: $font-family;
+      font-size: 20px;
+      padding: 10px;
+      margin: 10px;
       color: rgb(231, 229, 229);
       border: none;
-      background-color: $onActive;
+      background-color: $fruitSalad;
 
       border-radius: 50px;
       box-shadow: 0 4px 14px 4px rgba(105, 104, 104, 0.705);
       min-width: 100px;
       cursor: pointer;
-
-      @media (max-width: 450px) {
-        font-size: 1.2em;
-        min-width: 60px;
-      }
     }
 
     .submit-button:hover {
-      background-color: $onHover;
+      background-color: $apple;
     }
     .submit-button:active {
-      background-color: $onActive;
+      background-color: $fruitSalad;
     }
     .submit-button:disabled {
-      background-color: $disabled;
+      background-color: $corduroy;
       color: rgb(231, 229, 229);
       cursor: no-drop;
-
-      @media (max-width: 450px) {
-        font-size: 1.2em;
-        min-width: 60px;
-      }
     }
 
     a {

@@ -1,0 +1,37 @@
+<nav class="account-menu-nav">
+  <div class="account-menu">
+    <input type="checkbox" id="menu" />
+    <label class="name-label" for="menu">{{ name }}</label>
+    <ul class="menu-content">
+      <li class="logout" routerLink="/login">Logout</li>
+    </ul>
+  </div>
+</nav>
+
+<div class="main">
+  <div class="main-body">
+    <nav class="nav-bar">
+      <ul class="nav-tabs">
+        <li
+          class="nav-li"
+          routerLink="quizlist"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Quiz List
+        </li>
+        <li
+          class="nav-li"
+          routerLinkActive="active"
+          routerLink=""
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          Interviewees List
+        </li>
+      </ul>
+    </nav>
+    <div class="outlet">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

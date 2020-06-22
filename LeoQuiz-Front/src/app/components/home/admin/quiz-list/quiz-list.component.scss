@@ -1,0 +1,69 @@
+@import "src/styles/variables.scss";
+
+.quiz-list-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px;
+  align-items: center;
+}
+
+.quiz-list-table {
+  width: 100%;
+  .quiz-list-row {
+    background: $alto;
+
+    th {
+      text-align: left;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border-radius: 2px;
+    }
+
+    .quiz-id {
+      width: 25px;
+      text-align: center;
+    }
+
+    .quiz-action {
+      width: 50px;
+      text-align: center;
+
+      .btn-delete {
+        background: none;
+        border: none;
+
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    .quiz-name {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        cursor: pointer;
+        background: $grannySmithApple;
+      }
+    }
+  }
+  .quiz-list-header {
+    background: $bayLeaf;
+  }
+}
+
+.btn-create {
+  border: none;
+  margin-top: 15px;
+  width: 120px;
+  height: 42px;
+  border-radius: 5px;
+}

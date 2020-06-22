@@ -39,8 +39,9 @@ export class HttpAuthInterceptor implements HttpInterceptor {
         this.inflightAuthRequest = null;
 
         const authReq = req.clone({
-          headers: req.headers.set('token', newToken ? newToken : '')
+          headers: req.headers.set('Authorization', newToken ? 'Bearer ' + newToken : '')
         });
+        console.log("piped");
 
         return next.handle(authReq);
       }),

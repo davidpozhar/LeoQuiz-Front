@@ -1,0 +1,65 @@
+<div class="quiz-wrapper">
+  <table class="quiz-table">
+    <tr class="quiz-row quiz-header">
+      <th>Name</th>
+      <th>Time limit</th>
+      <th>Max attempts</th>
+      <th>Pass grade</th>
+      <th>Quiz url</th>
+    </tr>
+    <tr class="quiz-row">
+      <td><input [(ngModel)]="quiz && quiz.name" /></td>
+      <td>
+        <div class="time-limit-wrapper">
+          <input
+            type="number"
+            [value]="quiz && quiz.timeLimit.hours"
+            (change)="onTimeLimitChange($event, 'hour')"
+            min="0"
+          />
+          <p>:</p>
+          <input
+            type="number"
+            [value]="quiz && quiz.timeLimit.minutes"
+            (change)="onTimeLimitChange($event, 'minute')"
+            min="0"
+          />
+        </div>
+      </td>
+      <td><input type="number" [(ngModel)]="quiz && quiz.maxAttempts" /></td>
+      <td><input type="number" [(ngModel)]="quiz && quiz.passGrade" /></td>
+      <td><input [(ngModel)]="quiz && quiz.quizUrl" /></td>
+    </tr>
+  </table>
+  <table class="quiz-table">
+    <tr class="quiz-row quiz-header">
+      <th class="quiz-id">Id</th>
+      <th>Text</th>
+      <th>Time limit</th>
+      <th class="quiz-action">Action</th>
+    </tr>
+    <tr class="quiz-row" *ngFor="let question of quiz && quiz.questions">
+      <td class="quiz-id">{{ question && question.id }}</td>
+      <td
+        class="quiz-name"
+        [routerLink]="['/home/question', quiz.id, question.id]"
+      >
+        {{ question && question.text }}
+      </td>
+      <td>{{ question && getTimeLimit(question.timeLimit) }}</td>
+      <td class="quiz-action">
+        <button class="btn-delete" (click)="deleteQuestion(question.id)">
+          <img src="assets/rubbish.png" alt="Rubbish" />
+        </button>
+      </td>
+    </tr>
+  </table>
+  <div class="btn-wrapper">
+    <button class="btn-create" [routerLink]="['/home/question', quiz.id]">
+      Add question
+    </button>
+    <button class="btn-create" routerLink="/home/quizlist" (click)="confirm()">
+      Confirm
+    </button>
+  </div>
+</div>
