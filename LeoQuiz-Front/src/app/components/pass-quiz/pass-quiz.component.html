@@ -1,0 +1,49 @@
+<div class="quiz-wrapper">
+  <div class="quiz-header">
+    <p class="quiz-name">{{ quiz && quiz.name }}</p>
+    <p class="timer">{{ getTimeLimit(timeLimit) }}</p>
+    <p class="max-attempts">{{ quiz && quiz.maxAttempts }}</p>
+    <p class="max-grade">{{ quiz && quiz.passGrade }}</p>
+  </div>
+  <div class="user-info-wrapper">
+    <input
+      class="info-input"
+      placeholder="Name"
+      [(ngModel)]="passedQuiz && passedQuiz.user.name"
+    />
+    <input
+      class="info-input"
+      placeholder="Surname"
+      [(ngModel)]="passedQuiz && passedQuiz.user.surname"
+    />
+    <input
+      class="info-input"
+      placeholder="Email"
+      [(ngModel)]="passedQuiz && passedQuiz.user.email"
+    />
+  </div>
+  <div class="questions-wrapper">
+    <div
+      class="question-item-wrapper"
+      *ngFor="let question of quiz && passedQuiz.questions"
+    >
+      <p class="question-label">{{ question.text }}</p>
+      <div class="answer-wrapper" *ngFor="let answer of question.answers">
+        <input
+          *ngIf="checkAnswers(question)"
+          type="checkbox"
+          class="answer-input"
+          [(ngModel)]="answer && answer.isChecked"
+        />
+        <input
+          *ngIf="!checkAnswers(question)"
+          type="radio"
+          class="answer-input"
+          [name]="question.id"
+        />
+        <p class="answer-label">{{ answer.text }}</p>
+      </div>
+    </div>
+  </div>
+  <button class="btn-create" (click)="confirm()">Confirm</button>
+</div>

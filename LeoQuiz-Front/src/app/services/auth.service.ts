@@ -77,10 +77,7 @@ export class AuthService {
     if (!userData) {
       return;
     }
-    const loadedUser = new User(
-      userData.email,
-      userData.userRole
-    );
+    const loadedUser = new User(userData.email, userData.userRole);
     this.user.next(loadedUser);
   }
 
@@ -88,11 +85,7 @@ export class AuthService {
     this.user.next(null);
     this.http.get(environment.apiUrl + "/Account/Logout");
     this.router.navigate(["/login"]);
-    localStorage.removeItem("userData");
-    localStorage.removeItem("token");
-    if (this.tokenExpirationTimer) {
-      clearTimeout(this.tokenExpirationTimer);
-    }
+    localStorage.clear();
 
     this.tokenExpirationTimer = null;
   }

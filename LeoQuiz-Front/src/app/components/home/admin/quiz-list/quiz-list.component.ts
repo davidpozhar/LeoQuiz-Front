@@ -24,6 +24,7 @@ export class QuizListComponent implements OnInit {
       (responseData) => {
         console.log(responseData);
         this.quizzes = responseData;
+        localStorage.setItem("quizzList", JSON.stringify(this.quizzes));
       },
       (errorData) => {
         if (errorData.name === "HttpErrorResponse") {

@@ -11,3 +11,9 @@ export interface ITimeLimit {
   totalMinutes: number;
   totalSeconds: number;
 }
+
+export interface ICustomTimeLimit {
+  hours: number;
+  minutes: number;
+  seconds: number;
+}

@@ -1,14 +1,14 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { AuthService } from "src/app/services/auth.service";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ErrorDialogComponent } from '../error-dialog/error-dialog.component';
+import { ErrorDialogComponent } from "../error-dialog/error-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
-import { AuthErrors } from 'src/app/classes/error';
+import { AuthErrors } from "src/app/classes/error";
 
 @Component({
   selector: "app-home",
   templateUrl: "./home.component.html",
-  styleUrls: ["./home.component.scss"]
+  styleUrls: ["./home.component.scss"],
 })
 export class HomeComponent implements OnInit {
   roleId: number;
@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private route: ActivatedRoute 
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -28,7 +28,7 @@ export class HomeComponent implements OnInit {
       JSON.parse(localStorage.getItem("userData")).name +
       " " +
       JSON.parse(localStorage.getItem("userData")).surname;
-      this.userEmail = JSON.parse(localStorage.getItem("userData")).email;
+    this.userEmail = JSON.parse(localStorage.getItem("userData")).email;
   }
 
   onLogout() {
@@ -38,10 +38,10 @@ export class HomeComponent implements OnInit {
   private openErrorResponseDialog(errorName: string) {
     const dialogRef = this.dialog.open(ErrorDialogComponent, {
       width: "fit-content",
-      data: errorName
+      data: errorName,
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log("The dialog was closed");
     });
   }

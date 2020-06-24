@@ -1,6 +1,7 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import { AuthService } from 'src/app/services/auth.service';
+import { ActivatedRoute, Router } from "@angular/router";
+import { AuthService } from "src/app/services/auth.service";
+import { Route } from "@angular/compiler/src/core";
 
 @Component({
   selector: "app-root",
@@ -12,11 +13,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    console.log("Init");
     this.authService.autoLogin();
   }
 

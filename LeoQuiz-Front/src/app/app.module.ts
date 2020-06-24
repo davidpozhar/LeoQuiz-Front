@@ -20,6 +20,7 @@ import { RegistrationFormComponent } from "./components/auth/registration-form/r
 import { AuthService } from "./services/auth.service";
 import { QuestionService } from "./services/question-http.service";
 import { QuizService } from "./services/quiz-http.service";
+import { PassQuizService } from "./services/passed-quiz-http.service";
 import { AnswerService } from "./services/answer-http.service";
 import { SignInUpValidator } from "./validators/sign-in-up.validator";
 import { LoginFormComponent } from "./components/auth/login-form/login-form.component";
@@ -31,6 +32,7 @@ import { QuizListComponent } from "./components/home/admin/quiz-list/quiz-list.c
 import { ErrorDialogComponent } from "./components/error-dialog/error-dialog.component";
 import { QuestionComponent } from "./components/home/admin/question/question.component";
 import { QuizComponent } from "./components/home/admin/quiz/quiz.component";
+import { PassQuizComponent } from "./components/pass-quiz/pass-quiz.component";
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { QuizComponent } from "./components/home/admin/quiz/quiz.component";
     QuestionComponent,
     QuizListComponent,
     QuizComponent,
+    PassQuizComponent,
   ],
   imports: [
     BrowserModule,
@@ -69,6 +72,7 @@ import { QuizComponent } from "./components/home/admin/quiz/quiz.component";
     AuthService,
     SignInUpValidator,
     QuizService,
+    PassQuizService,
     AnswerService,
     QuestionService,
     { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },

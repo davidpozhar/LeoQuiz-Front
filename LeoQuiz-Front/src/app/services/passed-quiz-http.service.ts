@@ -7,8 +7,8 @@ import { GlobalErrors } from "../classes/error";
 import { IQuizData, IQuizViewData } from "../interfaces/quiz-data";
 
 @Injectable()
-export class QuizService {
-  apiUrl: string = environment.apiUrl + "/Quiz";
+export class PassQuizService {
+  apiUrl: string = environment.apiUrl + "/PassedQuiz";
 
   constructor(private http: HttpClient) {}
 
@@ -20,28 +20,14 @@ export class QuizService {
 
   getQuiz(id: number) {
     return this.http
-      .get<IQuizData>(this.apiUrl + "/GetQuizById/" + id)
-      .pipe(catchError(this.errorHandling));
-  }
-
-  getQuizView(id: number) {
-    console.log("getview" + id.toString());
-    return this.http
-      .get<IQuizViewData>(this.apiUrl + "/GetQuizViewById/" + id)
+      .get<IQuizData>(this.apiUrl + "/GetPassedQuizById/" + id)
       .pipe(catchError(this.errorHandling));
   }
 
   setNewQuiz(quiz: IQuizData) {
     console.log(quiz);
     return this.http
-      .post<IQuizData>(this.apiUrl + "/PostQuiz", quiz)
-      .pipe(catchError(this.errorHandling));
-  }
-
-  updateQuiz(quiz: IQuizData) {
-    console.log(quiz);
-    return this.http
-      .put<IQuizData>(this.apiUrl + "/PutQuiz", quiz)
+      .post<IQuizData>(this.apiUrl + "/PostPassedQuiz", quiz)
       .pipe(catchError(this.errorHandling));
   }
 
@@ -49,7 +35,7 @@ export class QuizService {
     console.log(id);
 
     return this.http
-      .delete(this.apiUrl + "/DeleteQuiz/" + id)
+      .delete(this.apiUrl + "/DeletePassedQuiz/" + id)
       .pipe(catchError(this.errorHandling));
   }
 

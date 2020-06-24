@@ -7,7 +7,6 @@ import { GlobalErrors } from "src/app/classes/error";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import { ITimeLimit } from "src/app/interfaces/time-limit";
 import { QuestionService } from "src/app/services/question-http.service";
-import { newArray } from "@angular/compiler/src/util";
 import { IQuestionData } from "src/app/interfaces/question-data";
 
 type TimePart = "hour" | "minute";
@@ -38,12 +37,23 @@ export class QuizComponent implements OnInit {
       } else {
         this.quiz = {
           name: "",
-          timeLimit: {},
+          timeLimit: { hours: 0, minutes: 10 },
           maxAttempts: 0,
           passGrade: 0,
           quizUrl: "",
           questions: Array<IQuestionData>(),
         };
+        if (JSON.parse(localStorage.getItem("quiz")) !== null) {
+          this.quiz = this.quiz.questions = JSON.parse(
+            localStorage.getItem("quiz")
+          );
+        }
+        if (JSON.parse(localStorage.getItem("questionList")) !== null) {
+          this.quiz.questions = JSON.parse(
+            localStorage.getItem("questionList")
+          );
+          localStorage.setItem("quiz", JSON.stringify(this.quiz));
+        }
       }
     });
   }
@@ -53,6 +63,13 @@ export class QuizComponent implements OnInit {
       (responseData) => {
         console.log(responseData);
         this.quiz = responseData;
+        this.quiz.timeLimit.hours = 0;
+        this.quiz.timeLimit.minutes = 10;
+        localStorage.setItem("quiz", JSON.stringify(this.quiz));
+        localStorage.setItem(
+          "questionList",
+          JSON.stringify(this.quiz.questions)
+        );
       },
       (errorData) => {
         if (errorData.name === "HttpErrorResponse") {
@@ -89,6 +106,7 @@ export class QuizComponent implements OnInit {
   }
 
   createQuiz(quiz: IQuizData) {
+    quiz.questions.forEach((element) => {});
     this.quizService.setNewQuiz(quiz).subscribe(
       (responseData) => {
         console.log("created");
@@ -110,6 +128,30 @@ export class QuizComponent implements OnInit {
       this.update(this.quiz);
     } else {
       this.createQuiz(this.quiz);
+    }
+    localStorage.removeItem("questionList");
+    localStorage.removeItem("quiz");
+  }
+
+  updateQuestionRedirect(id: number) {
+    console.log("updateredirect");
+    if (this.quiz.id !== undefined) {
+      this.router.navigate([
+        "/home/question/" + this.quiz.id.toString() + "/" + id.toString(),
+      ]);
+    } else {
+      this.router.navigate(["/home/question"]);
+    }
+  }
+
+  newQuestionRedirect() {
+    localStorage.setItem("quiz", JSON.stringify(this.quiz));
+    localStorage.setItem("questionList", JSON.stringify(this.quiz.questions));
+    console.log("updateredirect");
+    if (this.quiz.id !== undefined) {
+      this.router.navigate(["/home/question/" + this.quiz.id.toString()]);
+    } else {
+      this.router.navigate(["/home/question"]);
     }
   }
 

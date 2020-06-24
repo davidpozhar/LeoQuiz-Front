@@ -8,11 +8,14 @@ import { HomeComponent } from "./components/home/home.component";
 import { AuthGuard, AdminGuard, QuizListGuard } from "./services/auth.guard";
 import { QuizComponent } from "./components/home/admin/quiz/quiz.component";
 import { QuestionComponent } from "./components/home/admin/question/question.component";
+import { PassQuizComponent } from "./components/pass-quiz/pass-quiz.component";
 
 const appRoutes: Routes = [
   { path: "", component: WelcomePageComponent },
   { path: "login", component: LoginFormComponent },
   { path: "registration", component: RegistrationFormComponent },
+  { path: "passquiz/:id", component: PassQuizComponent },
+
   {
     path: "home",
     component: HomeComponent,
@@ -27,11 +30,16 @@ const appRoutes: Routes = [
         component: QuestionComponent,
       },
       {
+        path: "question",
+        component: QuestionComponent,
+      },
+      {
         path: "question/:quizId/:id",
         component: QuestionComponent,
       },
 
       { path: "quiz", component: QuizComponent },
+
       { path: "quiz/:id", component: QuizComponent },
     ],
   },

@@ -9,8 +9,7 @@ import { AnswerService } from "src/app/services/answer-http.service";
 import { IAnswerData } from "src/app/interfaces/answer-data";
 import { Location } from "@angular/common";
 import { Identifiers } from "@angular/compiler";
-
-type TimePart = "hour" | "minute";
+import { IQuizData } from "src/app/interfaces/quiz-data";
 
 @Component({
   selector: "app-question",
@@ -33,6 +32,7 @@ export class QuestionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    console.log("question");
     this.activateRoute.params.subscribe((params) => {
       this.id = params["id"];
       this.quizId = params["quizId"];
@@ -40,11 +40,15 @@ export class QuestionComponent implements OnInit {
       console.log(this.id);
       if (this.id !== undefined) {
         this.get(this.id);
+      } else if (this.quizId !== undefined) {
+        this.question = {
+          text: "",
+          quizId: Number(this.quizId),
+          answers: Array<IAnswerData>(),
+        };
       } else {
         this.question = {
           text: "",
-          timeLimit: {},
-          quizId: Number(this.quizId),
           answers: Array<IAnswerData>(),
         };
       }
@@ -66,11 +70,13 @@ export class QuestionComponent implements OnInit {
   }
 
   update(question: IQuestionData) {
-    //ЗАБРАТИ ВЕЛИКЫ ЛЫТЕРИ
     if (question.id != undefined) {
       this,
         this.questionService.updateQuestion(question).subscribe(
-          (responseData) => {},
+          (responseData) => {
+            this.question = responseData;
+            this.local();
+          },
           (errorData) => {
             if (errorData.name === GlobalErrors.undefinedError) {
               this.openErrorResponseDialog(errorData.message);
@@ -98,6 +104,8 @@ export class QuestionComponent implements OnInit {
       (responseData) => {
         console.log("created");
         console.log(responseData);
+        this.question = responseData;
+        this.local();
       },
       (errorData) => {
         if (errorData.name === "HttpErrorResponse") {
@@ -110,15 +118,32 @@ export class QuestionComponent implements OnInit {
   confirm() {
     if (this.id !== undefined) {
       this.update(this.question);
-    } else {
+    } else if (this.quizId !== undefined) {
       this.createQuestion(this.question);
+    } else {
+      this.local();
     }
     this.location.back();
   }
 
   addAnswer() {
-    this.question.answers.push({ isCorrest: false });
+    this.question.answers.push({ isCorrect: false });
     console.log(this.question);
+  }
+
+  local() {
+    let questionList = JSON.parse(localStorage.getItem("questionList"));
+    if (questionList === null) {
+      let questionList = Array<IQuestionData>();
+      questionList.push(this.question);
+    } else if (questionList.find((element) => element.id == this.question.id)) {
+      questionList[
+        questionList.findIndex((el) => el.id === this.question.id)
+      ] = this.question.id;
+    } else {
+      questionList.push(this.question);
+    }
+    localStorage.setItem("questionList", JSON.stringify(questionList));
   }
 
   deleteAnswer(id: number) {
@@ -135,29 +160,9 @@ export class QuestionComponent implements OnInit {
   }
 
   checkAnswer(id: number) {
-    let q = this.question.answers.find((x) => x.id === id).isCorrest;
-    this.question.answers.find((x) => x.id === id).isCorrest = !q;
+    let q = this.question.answers.find((x) => x.id === id).isCorrect;
+    this.question.answers.find((x) => x.id === id).isCorrect = !q;
     console.log(this.question);
-  }
-
-  onTimeLimitChange(event: any, type: TimePart) {
-    const value = Number(event.target.value);
-
-    if (type === "hour") {
-      if (value < 0) {
-        this.question.timeLimit.hours = 0;
-      } else {
-        this.question.timeLimit.hours = value;
-      }
-    } else if (type === "minute") {
-      if (value < 0) {
-        this.question.timeLimit.minutes = 0;
-      } else if (value > 60) {
-        this.question.timeLimit.minutes = 60;
-      } else {
-        this.question.timeLimit.minutes = value;
-      }
-    }
   }
 
   private openErrorResponseDialog(errorName: string) {

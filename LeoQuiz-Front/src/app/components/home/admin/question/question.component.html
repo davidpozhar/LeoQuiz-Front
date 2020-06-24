@@ -9,25 +9,6 @@
       ></textarea>
     </div>
 
-    <div class="div-for-field">
-      <p for="questionTimeLimit">Time limit</p>
-      <div class="time-limit-wrapper">
-        <input
-          type="number"
-          [value]="question && question.timeLimit.hours"
-          (change)="onTimeLimitChange($event, 'hour')"
-          min="0"
-        />
-        <p>:</p>
-        <input
-          type="number"
-          [value]="question && question.timeLimit.minutes"
-          (change)="onTimeLimitChange($event, 'minute')"
-          min="0"
-        />
-      </div>
-    </div>
-
     <div class="answers-wrapper">
       <p>Answers</p>
       <div

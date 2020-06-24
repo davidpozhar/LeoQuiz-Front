@@ -1,5 +1,12 @@
 import { Time } from "@angular/common";
-import { IQuestionData, IQuestionViewData } from "./question-data";
+import {
+  IQuestionData,
+  IQuestionViewData,
+  IQuestionPassedData,
+} from "./question-data";
+import { IUserData } from "./user-data";
+import { PassedQuizAnswer } from "./answer-data";
+import { ICustomTimeLimit } from "./time-limit";
 
 export interface IQuizData {
   id?: number;
@@ -8,16 +15,23 @@ export interface IQuizData {
   maxAttempts?: number;
   passGrade?: number;
   quizUrl?: string;
-  //userId?: number;                            ЮЗЕРІД ВСТАВЛЯТИ НА БЕКЕНДІ ЧЕРЕЗ КЛЕЙМИ НЕ ЗАБУДЬ ДОБАВИТИ
   questions?: Array<IQuestionData>;
 }
 
 export interface IQuizViewData {
   id?: number;
   name?: string;
-  timeLimit?: Time;
+  timeLimit?: ICustomTimeLimit;
   maxAttempts?: number;
   passGrade?: number;
   quizUrl?: string;
   questions?: Array<IQuestionViewData>;
+}
+
+export interface IPassedQuizData {
+  id?: number;
+  grade?: number;
+  quizId?: number;
+  user?: IUserData;
+  questions?: Array<IQuestionPassedData>;
 }
