@@ -1,0 +1,30 @@
+<div class="interviewee-list-wrapper">
+  <table class="interviewee-list-table">
+    <tr class="interviewee-list-row interviewee-list-header">
+      <th class="interviewee-id">№</th>
+      <th>Email</th>
+      <th class="passed-quizzes">Passed quizzes</th>
+      <th class="interviewee-action">Action</th>
+    </tr>
+    <tr
+      class="interviewee-list-row"
+      *ngFor="let interviewee of interviewees; let i = index"
+    >
+      <td class="interviewee-id">{{ i }}</td>
+      <td class="interviewee-name">
+        {{ interviewee.email }}
+      </td>
+      <td class="passed-quizzes">
+        3
+      </td>
+      <td class="interviewee-action">
+        <button
+          class="btn-delete"
+          routerLink="/home/interviewee/{{ interviewee.id }}"
+        >
+          <img src="assets/loupe.png" alt="Loupe" />
+        </button>
+      </td>
+    </tr>
+  </table>
+</div>

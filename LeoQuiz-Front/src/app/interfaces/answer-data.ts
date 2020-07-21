@@ -6,12 +6,13 @@ export interface IAnswerData {
 
 export interface IAnswerViewData {
   id?: number;
+  questionId: number;
   text?: string;
 }
 
-export interface PassedQuizAnswer {
+export interface IPassedQuizAnswer {
   id?: number;
   text?: string;
-  isCorrect?: boolean;
+  questionId: number;
   isChecked?: boolean;
 }

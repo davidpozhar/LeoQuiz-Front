@@ -5,11 +5,11 @@ import { MatDialog } from "@angular/material/dialog";
 import { QuizService } from "src/app/services/quiz-http.service";
 import { GlobalErrors } from "src/app/classes/error";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
-import { ITimeLimit } from "src/app/interfaces/time-limit";
+import { ITimeLimit, ICustomTimeLimit } from "src/app/interfaces/time-limit";
 import { QuestionService } from "src/app/services/question-http.service";
 import { IQuestionData } from "src/app/interfaces/question-data";
 
-type TimePart = "hour" | "minute";
+type TimePart = "minute" | "second";
 
 @Component({
   selector: "app-quiz",
@@ -19,6 +19,7 @@ type TimePart = "hour" | "minute";
 export class QuizComponent implements OnInit {
   id: number;
   quiz: IQuizData;
+  quizTime: ICustomTimeLimit = { minutes: 0, seconds: 0 };
 
   constructor(
     private dialog: MatDialog,
@@ -31,13 +32,12 @@ export class QuizComponent implements OnInit {
   ngOnInit(): void {
     this.activateRoute.params.subscribe((params) => {
       this.id = params["id"];
-      console.log(this.id);
       if (this.id !== undefined) {
         this.getById(this.id);
       } else {
         this.quiz = {
           name: "",
-          timeLimit: { hours: 0, minutes: 10 },
+          timeLimit: 0,
           maxAttempts: 0,
           passGrade: 0,
           quizUrl: "",
@@ -61,10 +61,9 @@ export class QuizComponent implements OnInit {
   getById(id: number) {
     this.quizService.getQuiz(id).subscribe(
       (responseData) => {
-        console.log(responseData);
         this.quiz = responseData;
-        this.quiz.timeLimit.hours = 0;
-        this.quiz.timeLimit.minutes = 10;
+        this.quizTime.minutes = Math.floor(this.quiz.timeLimit / 60);
+        this.quizTime.seconds = this.quiz.timeLimit % 60;
         localStorage.setItem("quiz", JSON.stringify(this.quiz));
         localStorage.setItem(
           "questionList",
@@ -83,8 +82,8 @@ export class QuizComponent implements OnInit {
     part.toString().length > 1 ? part : `0${part}`;
 
   getTimeLimit = (timeLimit: ITimeLimit) =>
-    `${this.updateTimeType(timeLimit?.hours)}:${this.updateTimeType(
-      timeLimit?.minutes
+    `${this.updateTimeType(timeLimit?.minutes)}:${this.updateTimeType(
+      timeLimit?.seconds
     )}`;
 
   update(quiz: IQuizData) {
@@ -92,8 +91,6 @@ export class QuizComponent implements OnInit {
       this,
         this.quizService.updateQuiz(quiz).subscribe(
           (responseData) => {
-            console.log("updated");
-            console.log(responseData);
             this.router.navigate(["/home/quizlist"]);
           },
           (errorData) => {
@@ -109,8 +106,6 @@ export class QuizComponent implements OnInit {
     quiz.questions.forEach((element) => {});
     this.quizService.setNewQuiz(quiz).subscribe(
       (responseData) => {
-        console.log("created");
-        console.log(responseData);
         this.router.navigate(["/home/quizlist"]);
       },
       (errorData) => {
@@ -122,8 +117,6 @@ export class QuizComponent implements OnInit {
   }
 
   confirm() {
-    console.log("confirm");
-    console.log(this.quiz);
     if (this.id !== undefined) {
       this.update(this.quiz);
     } else {
@@ -134,7 +127,6 @@ export class QuizComponent implements OnInit {
   }
 
   updateQuestionRedirect(id: number) {
-    console.log("updateredirect");
     if (this.quiz.id !== undefined) {
       this.router.navigate([
         "/home/question/" + this.quiz.id.toString() + "/" + id.toString(),
@@ -147,7 +139,6 @@ export class QuizComponent implements OnInit {
   newQuestionRedirect() {
     localStorage.setItem("quiz", JSON.stringify(this.quiz));
     localStorage.setItem("questionList", JSON.stringify(this.quiz.questions));
-    console.log("updateredirect");
     if (this.quiz.id !== undefined) {
       this.router.navigate(["/home/question/" + this.quiz.id.toString()]);
     } else {
@@ -156,7 +147,6 @@ export class QuizComponent implements OnInit {
   }
 
   deleteQuestion(id: number) {
-    console.log(id);
     if (id !== undefined) {
       this.questionService.deleteQuestion(id).subscribe(
         (_responseData) => {
@@ -176,22 +166,34 @@ export class QuizComponent implements OnInit {
   onTimeLimitChange(event: any, type: TimePart) {
     const value = Number(event.target.value);
 
-    if (type === "hour") {
+    if (type === "minute") {
       if (value < 0) {
-        this.quiz.timeLimit.hours = 0;
-      } else {
-        this.quiz.timeLimit.hours = value;
-      }
-    } else if (type === "minute") {
-      if (value < 0) {
-        this.quiz.timeLimit.minutes = 0;
+        this.quizTime.minutes = 0;
       } else if (value > 60) {
-        this.quiz.timeLimit.minutes = 60;
+        this.quizTime.minutes = 60;
       } else {
-        this.quiz.timeLimit.minutes = value;
+        this.quizTime.minutes = value;
+      }
+    } else if (type === "second") {
+      if (value < 0) {
+        this.quizTime.seconds = 0;
+      } else if (value > 59) {
+        this.quizTime.minutes++;
+        this.quizTime.seconds = 0;
+      } else {
+        this.quizTime.seconds = value;
       }
     }
-    console.log(this.quiz);
+
+    this.quiz.timeLimit = this.quizTime.minutes * 60 + this.quizTime.seconds;
+  }
+
+  onPassGradeChange() {
+    if (this.quiz.passGrade > 100) {
+      this.quiz.passGrade = 100;
+    } else if (this.quiz.passGrade < 0) {
+      this.quiz.passGrade = 0;
+    }
   }
 
   private openErrorResponseDialog(errorName: string) {

@@ -25,29 +25,24 @@ export class QuizService {
   }
 
   getQuizView(id: number) {
-    console.log("getview" + id.toString());
     return this.http
       .get<IQuizViewData>(this.apiUrl + "/GetQuizViewById/" + id)
       .pipe(catchError(this.errorHandling));
   }
 
   setNewQuiz(quiz: IQuizData) {
-    console.log(quiz);
     return this.http
       .post<IQuizData>(this.apiUrl + "/PostQuiz", quiz)
       .pipe(catchError(this.errorHandling));
   }
 
   updateQuiz(quiz: IQuizData) {
-    console.log(quiz);
     return this.http
       .put<IQuizData>(this.apiUrl + "/PutQuiz", quiz)
       .pipe(catchError(this.errorHandling));
   }
 
   deleteQuiz(id: number) {
-    console.log(id);
-
     return this.http
       .delete(this.apiUrl + "/DeleteQuiz/" + id)
       .pipe(catchError(this.errorHandling));

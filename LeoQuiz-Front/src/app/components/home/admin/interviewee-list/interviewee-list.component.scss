@@ -1,0 +1,61 @@
+@import "src/styles/variables.scss";
+
+.interviewee-list-wrapper {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 30px;
+  align-items: center;
+}
+
+.interviewee-list-table {
+  width: 100%;
+  .interviewee-list-row {
+    background: $alto;
+
+    th {
+      text-align: left;
+    }
+
+    th,
+    td {
+      padding: 10px;
+      border-radius: 2px;
+    }
+
+    .interviewee-id {
+      width: 25px;
+      text-align: center;
+    }
+
+    .interviewee-action {
+      width: 50px;
+      text-align: center;
+
+      .btn-delete {
+        background: none;
+        border: none;
+
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+
+    .interviewee-name {
+      max-width: 300px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+
+      &:hover {
+        cursor: pointer;
+        background: $grannySmithApple;
+      }
+    }
+  }
+  .interviewee-list-header {
+    background: $bayLeaf;
+  }
+}

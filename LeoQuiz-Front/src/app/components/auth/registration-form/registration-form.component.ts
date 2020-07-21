@@ -97,22 +97,6 @@ export class RegistrationFormComponent implements OnInit {
         }
       }
     );
-
-    console.log(inputData);
-
-    this.authService.getUserInfo().subscribe(
-      (responseData) => {
-        console.log("getInfo-end");
-        this.router.navigate(["/home"]);
-      },
-      (errorData) => {
-        console.log(errorData);
-        this.authError = errorData;
-        if (errorData.name === AuthErrors.undefinedError) {
-          this.openErrorResponseDialog(errorData.message);
-        }
-      }
-    );
   }
 
   openErrorResponseDialog(errorName: string) {

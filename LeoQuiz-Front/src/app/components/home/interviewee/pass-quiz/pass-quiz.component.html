@@ -25,21 +25,22 @@
   <div class="questions-wrapper">
     <div
       class="question-item-wrapper"
-      *ngFor="let question of quiz && passedQuiz.questions"
+      *ngFor="let question of quiz && quiz.questions"
     >
       <p class="question-label">{{ question.text }}</p>
       <div class="answer-wrapper" *ngFor="let answer of question.answers">
         <input
-          *ngIf="checkAnswers(question)"
+          *ngIf="checkAnswers(question.id)"
           type="checkbox"
           class="answer-input"
           [(ngModel)]="answer && answer.isChecked"
         />
         <input
-          *ngIf="!checkAnswers(question)"
+          *ngIf="!checkAnswers(question.id)"
           type="radio"
           class="answer-input"
           [name]="question.id"
+          (change)="changeAnswers($event, answer)"
         />
         <p class="answer-label">{{ answer.text }}</p>
       </div>

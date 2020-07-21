@@ -1,12 +1,6 @@
-import { Time } from "@angular/common";
-import {
-  IQuestionData,
-  IQuestionViewData,
-  IQuestionPassedData,
-} from "./question-data";
+import { IQuestionData, IQuestionViewData } from "./question-data";
 import { IUserData } from "./user-data";
-import { PassedQuizAnswer } from "./answer-data";
-import { ICustomTimeLimit } from "./time-limit";
+import { IPassedQuizAnswer } from "./answer-data";
 
 export interface IQuizData {
   id?: number;
@@ -21,7 +15,7 @@ export interface IQuizData {
 export interface IQuizViewData {
   id?: number;
   name?: string;
-  timeLimit?: ICustomTimeLimit;
+  timeLimit?: number;
   maxAttempts?: number;
   passGrade?: number;
   quizUrl?: string;
@@ -30,8 +24,15 @@ export interface IQuizViewData {
 
 export interface IPassedQuizData {
   id?: number;
+  quizId?: number;
+  user?: IUserData;
+  answers?: Array<IPassedQuizAnswer>;
+}
+
+export interface IPassedFullQuizData {
+  id?: number;
   grade?: number;
   quizId?: number;
   user?: IUserData;
-  questions?: Array<IQuestionPassedData>;
+  answers?: Array<IPassedQuizAnswer>;
 }

@@ -32,12 +32,9 @@ export class QuestionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log("question");
     this.activateRoute.params.subscribe((params) => {
       this.id = params["id"];
       this.quizId = params["quizId"];
-      console.log(this.quizId);
-      console.log(this.id);
       if (this.id !== undefined) {
         this.get(this.id);
       } else if (this.quizId !== undefined) {

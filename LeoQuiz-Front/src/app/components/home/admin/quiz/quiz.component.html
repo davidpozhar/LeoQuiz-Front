@@ -4,7 +4,7 @@
       <th>Name</th>
       <th>Time limit</th>
       <th>Max attempts</th>
-      <th>Pass grade</th>
+      <th>Pass grade, %</th>
       <th>Quiz url</th>
     </tr>
     <tr class="quiz-row">
@@ -13,21 +13,27 @@
         <div class="time-limit-wrapper">
           <input
             type="number"
-            [value]="quiz && quiz.timeLimit.hours"
-            (change)="onTimeLimitChange($event, 'hour')"
+            [value]="quiz && quizTime.minutes"
+            (change)="onTimeLimitChange($event, 'minute')"
             min="0"
           />
           <p>:</p>
           <input
             type="number"
-            [value]="quiz && quiz.timeLimit.minutes"
-            (change)="onTimeLimitChange($event, 'minute')"
+            [value]="quiz && quizTime.seconds"
+            (change)="onTimeLimitChange($event, 'second')"
             min="0"
           />
         </div>
       </td>
       <td><input type="number" [(ngModel)]="quiz && quiz.maxAttempts" /></td>
-      <td><input type="number" [(ngModel)]="quiz && quiz.passGrade" /></td>
+      <td>
+        <input
+          type="number"
+          [(ngModel)]="quiz && quiz.passGrade"
+          (change)="onPassGradeChange()"
+        />
+      </td>
       <td>
         <p>{{ quiz && quiz.quizUrl }}</p>
       </td>

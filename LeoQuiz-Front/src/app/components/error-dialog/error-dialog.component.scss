@@ -8,6 +8,7 @@
   border-radius: 3px;
   color: grey;
 
+  min-width: 400px;
   p {
     color: white;
   }
@@ -20,6 +21,7 @@
 
 ::ng-deep .mat-dialog-container {
   background: $codGray;
+  min-width: 400px;
 }
 
 .new-event-dialog {

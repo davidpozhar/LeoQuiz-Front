@@ -4,7 +4,7 @@ import { catchError } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 import { throwError } from "rxjs";
 import { GlobalErrors } from "../classes/error";
-import { IQuizData, IQuizViewData } from "../interfaces/quiz-data";
+import { IPassedQuizData } from "../interfaces/quiz-data";
 
 @Injectable()
 export class PassQuizService {
@@ -14,26 +14,23 @@ export class PassQuizService {
 
   getQuizList() {
     return this.http
-      .get<Array<IQuizData>>(this.apiUrl + "/GetAll")
+      .get<Array<IPassedQuizData>>(this.apiUrl + "/GetAll")
       .pipe(catchError(this.errorHandling));
   }
 
   getQuiz(id: number) {
     return this.http
-      .get<IQuizData>(this.apiUrl + "/GetPassedQuizById/" + id)
+      .get<IPassedQuizData>(this.apiUrl + "/GetPassedQuizById/" + id)
       .pipe(catchError(this.errorHandling));
   }
 
-  setNewQuiz(quiz: IQuizData) {
-    console.log(quiz);
+  setNewQuiz(quiz: IPassedQuizData) {
     return this.http
-      .post<IQuizData>(this.apiUrl + "/PostPassedQuiz", quiz)
+      .post<IPassedQuizData>(this.apiUrl + "/PostPassedQuiz", quiz)
       .pipe(catchError(this.errorHandling));
   }
 
   deleteQuiz(id: number) {
-    console.log(id);
-
     return this.http
       .delete(this.apiUrl + "/DeletePassedQuiz/" + id)
       .pipe(catchError(this.errorHandling));

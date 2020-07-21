@@ -32,7 +32,9 @@ import { QuizListComponent } from "./components/home/admin/quiz-list/quiz-list.c
 import { ErrorDialogComponent } from "./components/error-dialog/error-dialog.component";
 import { QuestionComponent } from "./components/home/admin/question/question.component";
 import { QuizComponent } from "./components/home/admin/quiz/quiz.component";
-import { PassQuizComponent } from "./components/pass-quiz/pass-quiz.component";
+import { PassQuizComponent } from "./components/home/interviewee/pass-quiz/pass-quiz.component";
+import { IntervieweeListComponent } from "../app/components/home/admin/interviewee-list/interviewee-list.component";
+import { UserService } from "./services/user-http.service";
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { PassQuizComponent } from "./components/pass-quiz/pass-quiz.component";
     QuizListComponent,
     QuizComponent,
     PassQuizComponent,
+    IntervieweeListComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,6 +73,7 @@ import { PassQuizComponent } from "./components/pass-quiz/pass-quiz.component";
   entryComponents: [ErrorDialogComponent],
   providers: [
     AuthService,
+    UserService,
     SignInUpValidator,
     QuizService,
     PassQuizService,

@@ -22,7 +22,6 @@ export class QuizListComponent implements OnInit {
   private Get() {
     this.quizService.getQuizList().subscribe(
       (responseData) => {
-        console.log(responseData);
         this.quizzes = responseData;
         localStorage.setItem("quizzList", JSON.stringify(this.quizzes));
       },
@@ -35,7 +34,6 @@ export class QuizListComponent implements OnInit {
   }
 
   Delete(id: number) {
-    console.log(id);
     if (id !== undefined) {
       this.quizService.deleteQuiz(id).subscribe(
         (_responseData) => {

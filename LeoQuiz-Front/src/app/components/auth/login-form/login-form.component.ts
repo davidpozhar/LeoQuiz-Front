@@ -43,11 +43,9 @@ export class LoginFormComponent implements OnInit {
     console.log("start login in");
     this.authService.singIn(loginData).subscribe(
       (responseData) => {
-        console.log("end");
         this.loginForm.reset();
         return this.authService.getUserInfo().subscribe(
           (responseData) => {
-            console.log("getInfo-end");
             this.router.navigate(["/home"]);
           },
           (errorData) => {

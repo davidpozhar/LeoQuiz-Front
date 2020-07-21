@@ -29,7 +29,7 @@ export class HttpAuthInterceptor implements HttpInterceptor {
     "http://localhost:5000/Quiz/GetQuizViewById/8",
     "http://localhost:5000/Quiz/GetQuizViewById/9",
     "http://localhost:5000/Quiz/GetQuizViewById/10",
-    "http://localhost:5000/Quiz/PostPassedQuiz",
+    "http://localhost:5000/PassedQuiz/PostPassedQuiz",
   ];
 
   intercept(

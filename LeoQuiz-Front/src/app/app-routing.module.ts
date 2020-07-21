@@ -5,10 +5,11 @@ import { LoginFormComponent } from "./components/auth/login-form/login-form.comp
 import { RegistrationFormComponent } from "./components/auth/registration-form/registration-form.component";
 import { QuizListComponent } from "./components/home/admin/quiz-list/quiz-list.component";
 import { HomeComponent } from "./components/home/home.component";
-import { AuthGuard, AdminGuard, QuizListGuard } from "./services/auth.guard";
+import { AuthGuard } from "./services/auth.guard";
 import { QuizComponent } from "./components/home/admin/quiz/quiz.component";
 import { QuestionComponent } from "./components/home/admin/question/question.component";
-import { PassQuizComponent } from "./components/pass-quiz/pass-quiz.component";
+import { PassQuizComponent } from "./components/home/interviewee/pass-quiz/pass-quiz.component";
+import { IntervieweeListComponent } from "./components/home/admin/interviewee-list/interviewee-list.component";
 
 const appRoutes: Routes = [
   { path: "", component: WelcomePageComponent },
@@ -24,6 +25,10 @@ const appRoutes: Routes = [
       {
         path: "quizlist",
         component: QuizListComponent,
+      },
+      {
+        path: "intervieweelist",
+        component: IntervieweeListComponent,
       },
       {
         path: "question/:quizId",

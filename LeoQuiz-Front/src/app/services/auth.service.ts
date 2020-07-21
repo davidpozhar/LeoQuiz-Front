@@ -39,7 +39,6 @@ export class AuthService {
   }
 
   singIn(userLoginInData: IUserData) {
-    console.log(userLoginInData);
     return this.http
       .post<string>(environment.apiUrl + "/Account/SignIn", userLoginInData, {
         responseType: "text" as "json",
@@ -59,8 +58,6 @@ export class AuthService {
       .pipe(
         catchError(this.errorHandler),
         tap((responseData) => {
-          console.log("responseData: ");
-          console.log(responseData);
           this.userHandling(
             responseData.email,
             responseData.name,
@@ -72,7 +69,6 @@ export class AuthService {
   }
 
   autoLogin() {
-    console.log("authlogin");
     const userData: User = JSON.parse(localStorage.getItem("userData"));
     if (!userData) {
       return;
@@ -91,7 +87,6 @@ export class AuthService {
   }
 
   private authHandling(token: string) {
-    console.log("setToken");
     localStorage.setItem("token", JSON.stringify(token));
   }
 
@@ -101,8 +96,6 @@ export class AuthService {
     surname: string,
     userRole: number
   ) {
-    console.log("SetUserData");
-    console.log("Role: " + userRole);
     const userData: IUserData = {
       email: email,
       name: name,
@@ -111,8 +104,6 @@ export class AuthService {
     };
     const userAuth = new User(email, userRole);
     this.user.next(userAuth);
-    console.log("userHandling object: ");
-    console.log(userData);
     localStorage.setItem("userData", JSON.stringify(userData));
   }
 
@@ -168,9 +159,10 @@ export class AuthService {
       }
     }
 
+    console.log(errorResponse.statusText);
     return throwError({
       name: errorResponse.name,
-      message: errorResponse.message,
+      message: errorResponse.statusText,
     });
   }
 }
